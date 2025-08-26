@@ -83,7 +83,7 @@ You need to have the following software installed on your machine:
 
 ## Author
 
-- **Kgotso Mpsane** - Initial work - [Your GitHub Profile](https://github.com/kgotso234)
+- **Kgotso Mpsane** - Initial work - [GitHub Profile](https://github.com/kgotso234)
 
 ## License
 
