@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Leaves</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"  crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="bg-gray-100 min-h-screen flex">
+
+    <div id="sidebar"></div>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow p-6 ml-64 p-6">
+        <section id="leave-content" class="content-section">
+            <div class="bg-white rounded-lg shadow-sm p-6 mb-6 dashboard-card">
+                <div id="topbar"></div>
+            </div>
+            <div class="p-6 bg-white rounded-lg shadow-md mb-4">
+                <h2 class="text-xl font-semibold text-gray-700 mb-4">Pending Applications</h2>
+                <table class="min-w-full bg-white rounded-lg overflow-hidden">
+                    <thead class="bg-gray-200">
+                        <tr>
+                            <th class="py-2 px-4 text-left text-gray-700">Employee</th>
+                            <th class="py-2 px-4 text-left text-gray-700">Employee No.</th>
+                            <th class="py-2 px-4 text-left text-gray-700">Leave Type</th>
+                            <th class="py-2 px-4 text-left text-gray-700">Start Date</th>
+                            <th class="py-2 px-4 text-left text-gray-700">End Date</th>
+                            <th class="py-2 px-4 text-left text-gray-700">Status</th>
+                            <th class="py-2 px-4 text-left text-gray-700">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pending-tbody">
+                        <!-- Rows will dynamically display here -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="p-6 bg-white rounded-lg shadow-md mb-4">
+                <h2 class="text-xl font-semibold text-gray-700 mb-4">Approved Applications</h2>
+                <table class="min-w-full bg-white rounded-lg overflow-hidden">
+                    <thead class="bg-gray-200">
+                        <tr>
+                            <th class="py-2 px-4 text-left text-gray-700">Employee</th>
+                            <th class="py-2 px-4 text-left text-gray-700">Employee No.</th>
+                            <th class="py-2 px-4 text-left text-gray-700">Leave Type</th>
+                            <th class="py-2 px-4 text-left text-gray-700">Start Date</th>
+                            <th class="py-2 px-4 text-left text-gray-700">End Date</th>
+                            <th class="py-2 px-4 text-left text-gray-700">Status</th>
+                            <th class="py-2 px-4 text-left text-gray-700">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="approved-tbody">
+                        <!-- Rows will dynamically display here -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="p-6 bg-white rounded-lg shadow-md mb-4" >
+                <h2 class="text-xl font-semibold text-gray-700 mb-4">Rejected Applications</h2>
+                <table class="min-w-full bg-white rounded-lg overflow-hidden">
+                    <thead class="bg-gray-200">
+                        <tr>
+                            <th class="py-2 px-4 text-left text-gray-700">Employee</th>
+                            <th class="py-2 px-4 text-left text-gray-700">Employee No.</th>
+                            <th class="py-2 px-4 text-left text-gray-700">Leave Type</th>
+                            <th class="py-2 px-4 text-left text-gray-700">Start Date</th>
+                            <th class="py-2 px-4 text-left text-gray-700">End Date</th>
+                            <th class="py-2 px-4 text-left text-gray-700">Status</th>
+                            <th class="py-2 px-4 text-left text-gray-700">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rejected-tbody">
+                        <!-- Rows will dynamically display here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script src="../js/logout.js"></script>
+    <script src="../js/includes.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            const token = localStorage.getItem("token");
+            if (!token) {
+                window.location.href = "/login";
+                return;
+            }
+
+            // Separate tbody references
+            const pendingTbody = document.getElementById("pending-tbody");
+            const approvedTbody = document.getElementById("approved-tbody");
+            const rejectedTbody = document.getElementById("rejected-tbody");
+
+            async function updateStatus(leaveId, status, row) {
+                try {
+                    const res = await fetch(`http://localhost:5000/admin/leaves/update-status/${leaveId}`, {
+                        method: "PATCH",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${token}`
+                        },
+                        body: JSON.stringify({ status })
+                    });
+
+                    const text = await res.text();
+                    let data;
+                    try {
+                        data = JSON.parse(text);
+                    } catch (err) {
+                        console.error("Response was not JSON:", text);
+                        throw err;
+                    }
+
+                    if (!res.ok) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: data.message || 'Could not update status',
+                            timer: 2000,
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false
+                        });
+                        return;
+                    }
+
+                    // Refresh the page or re-fetch lists
+                    row.remove();
+                    Swal.fire({
+                        icon: 'success',
+                        title: `Leave ${status}`,
+                        timer: 2000,
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false
+                    });
+
+                } catch (err) {
+                    console.error(err);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Server error',
+                        timer: 2000,
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false
+                    });
+                }
+            }
+
+            function renderLeaves(leaves, tbody, section) {
+                tbody.innerHTML = "";
+                if (!leaves || leaves.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="7" class="text-center py-4">No ${section} leaves</td></tr>`;
+                    return;
+                }
+
+                leaves.forEach(leave => {
+                    const row = document.createElement("tr");
+                    row.dataset.leaveId = leave._id;
+
+                    const employee = leave.employeeId;
+                    const employeeName = `${employee?.e_fname || ""} ${employee?.e_lname || ""}`;
+
+                    let statusClass = "text-yellow-600"; 
+                    if (leave.status === "Approved") statusClass = "text-green-600";
+                    if (leave.status === "Rejected") statusClass = "text-red-600";
+
+                    row.innerHTML = `
+                        <td class="border-t py-2 px-4 text-gray-800">${employeeName}</td>
+                        <td class="border-t py-2 px-4 text-gray-800">${employee?.e_number || "N/A"}</td>
+                        <td class="border-t py-2 px-4 text-gray-800">${leave.leaveTypeId?.name || "N/A"}</td>
+                        <td class="border-t py-2 px-4 text-gray-800">${new Date(leave.startDate).toLocaleDateString()}</td>
+                        <td class="border-t py-2 px-4 text-gray-800">${new Date(leave.endDate).toLocaleDateString()}</td>
+                        <td class="border-t py-2 px-4 font-semibold ${statusClass}">${leave.status}</td>
+                        <td class="border-t py-2 px-4 text-gray-800">
+                            ${section === "pending" ? `
+                                <button class="bg-green-500 hover:bg-green-600 text-white text-xs font-bold py-1 px-2 rounded-md mr-1">Approve</button>
+                                <button class="bg-red-500 hover:bg-red-600 text-white text-xs font-bold py-1 px-2 rounded-md">Reject</button>
+                            ` : ""}
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+
+                    if (section === "pending") {
+                        row.querySelector("button.bg-green-500")?.addEventListener("click", () => updateStatus(leave._id, "Approved", row));
+                        row.querySelector("button.bg-red-500")?.addEventListener("click", () => updateStatus(leave._id, "Rejected", row));
+                    }
+                });
+            }
+
+            // Fetch pending
+            try {
+                const res = await fetch("http://localhost:5000/admin/leaves/pending", { headers: { Authorization: `Bearer ${token}` } });
+                const data = await res.json();
+                renderLeaves(data.leaves, pendingTbody, "pending");
+            } catch (err) {
+                console.error(err);
+            }
+
+            // Fetch approved
+            try {
+                const res = await fetch("http://localhost:5000/admin/leaves/approved", { headers: { Authorization: `Bearer ${token}` } });
+                const data = await res.json();
+                renderLeaves(data.leaves, approvedTbody, "approved");
+            } catch (err) {
+                console.error(err);
+            }
+
+            // Fetch rejected
+            try {
+                const res = await fetch("http://localhost:5000/admin/leaves/rejected", { headers: { Authorization: `Bearer ${token}` } });
+                const data = await res.json();
+                renderLeaves(data.leaves, rejectedTbody, "rejected");
+            } catch (err) {
+                console.error(err);
+            }
+        });
+
+    </script>
+
+</body>
+</html>

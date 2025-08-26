@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Account</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="bg-gray-100 min-h-screen flex">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-gray-800 text-white flex flex-col shadow-lg rounded-r-lg p-4">
+        <!-- StaffSync Logo -->
+        <div class="flex items-center justify-center mb-6 mt-2">
+            <img src="../assets/file_00000000c38461f7af170a1413ed911a.png" alt="StaffSync Logo" class="h-14 w-auto object-contain rounded-lg">
+        </div>
+        <!-- Sidebar Navigation/Content Below the Log -->
+        <nav class="flex-grow">
+            <h3 class="font-semibold text-gray-300 mb-3">Navigation</h3>
+            <ul class="space-y-2">
+                <li>
+                    <a href="/login" class="nav-link flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded-md transition duration-200">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                        Login
+                    </a>
+                </li>
+                <li>
+                    <a href="/register" class="nav-link flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded-md transition duration-200">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                        </svg>
+                        Register
+                    </a>
+                </li>
+                
+            </ul>
+        </nav>
+    </aside>
+    <!-- Main Content Area -->
+    <main class="flex-grow p-6">
+        <section id="employees-content" class="content-section">
+            <h1 class="text-3xl font-bold text-gray-800 mb-4">Employee Registration</h1>
+            <p class="text-gray-600 mb-6">Register to access the system. </p>
+            <div class="p-6 bg-white rounded-lg shadow-md mb-6">
+                <h2 class="text-xl font-semibold text-gray-700 mb-4">Register</h2>
+                <form id="employeeForm">
+                    <div class="mb-4 flex space-x-4">
+                        <div class="w-1/2">
+                            <label for="e_fname" class="block text-gray-700 text-sm font-bold mb-2">First Name</label>
+                            <input type="text" id="e_fname" name="e_fname" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="e.g., Alice">
+                        </div>
+                        <div class="w-1/2">
+                            <label for="e_lname" class="block text-gray-700 text-sm font-bold mb-2">Last Name</label>
+                            <input type="text" id="e_lname" name="e_lname" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="e.g., Johnson">
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="e_email" class="block text-gray-700 text-sm font-bold mb-2">Email Address</label>
+                        <input type="email" id="e_email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="alice.j@example.com">
+                    </div>
+                    <!-- Company Dropdown -->
+                    <div class="mb-6">
+                        <label for="companySelect" class="block text-gray-700 text-sm font-bold mb-2">Company</label>
+                        <select id="companySelect" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            <option value="">Select Company</option>
+                            <!-- Companies will be populated here -->
+                        </select>
+                    </div>
+
+                    <!-- Department Dropdown (hidden initially) -->
+                    <div class="mb-6 hidden" id="departmentContainer">
+                        <label for="employeeDepartment" class="block text-gray-700 text-sm font-bold mb-2">Department</label>
+                        <select id="employeeDepartment" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            <option value="">Select Department</option>
+                            <!-- Departments will be populated here -->
+                        </select>
+                    </div>
+                    <!-- Password Field -->
+                    <div class="mb-4 relative">
+                        <label for="employeePassword" class="block text-gray-700 text-sm font-bold mb-2">Password</label>
+                        <input type="password" id="employeePassword" class="shadow appearance-none border rounded w-full py-2 px-3 pr-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Enter password" required>
+                        <span class="absolute right-3 top-9 cursor-pointer" onclick="togglePassword('employeePassword', this)">
+                            👁️
+                        </span>
+                    </div>
+
+                    <!-- Confirm Password Field -->
+                    <div class="mb-6 relative">
+                        <label for="confirmPassword" class="block text-gray-700 text-sm font-bold mb-2">Confirm Password</label>
+                        <input type="password" id="confirmPassword" class="shadow appearance-none border rounded w-full py-2 px-3 pr-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Re-enter password" required>
+                        <span class="absolute right-3 top-9 cursor-pointer" onclick="togglePassword('confirmPassword', this)">
+                            👁️
+                        </span>
+                    </div>
+
+
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline transition duration-200">
+                        Add Employee
+                    </button>
+                </form>
+            </div>
+            
+        </section>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            const companySelect = document.getElementById("companySelect");
+            const departmentContainer = document.getElementById("departmentContainer");
+            const departmentSelect = document.getElementById("employeeDepartment");
+
+            // Fetch and populate companies
+            try {
+                const companyRes = await fetch("http://localhost:5000/companies");
+                const companies = await companyRes.json();
+                companies.forEach(company => {
+                    const option = document.createElement("option");
+                    option.value = company._id;
+                    option.textContent = company.c_name;
+                    companySelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error("Failed to fetch companies:", error);
+            }
+
+            // When a company is selected, fetch and show departments
+            companySelect.addEventListener("change", async () => {
+                const companyId = companySelect.value;
+                departmentSelect.innerHTML = `<option value="">Select Department</option>`; // Reset
+
+                if (!companyId) {
+                    departmentContainer.classList.add("hidden");
+                    return;
+                }
+
+                try {
+                   const depRes = await fetch(`http://localhost:5000/departments/company/${companyId}`);
+                    const departments = await depRes.json();
+
+                    departments.forEach(dep => {
+                        const option = document.createElement("option");
+                        option.value = dep._id;
+                        option.textContent = dep.departmentName;
+                        departmentSelect.appendChild(option);
+                    });
+
+                    departmentContainer.classList.remove("hidden");
+                } catch (error) {
+                    console.error("Failed to fetch departments:", error);
+                    departmentContainer.classList.add("hidden");
+                }
+            });
+        });
+        // Toggle password visibility
+        function togglePassword(fieldId, icon) {
+            const field = document.getElementById(fieldId);
+            if (field.type === "password") {
+                field.type = "text";
+                icon.textContent = "🙈";
+            } else {
+                field.type = "password";
+                icon.textContent = "👁️";
+            }
+        }
+    
+        
+            // Handle form submission
+        document.getElementById("employeeForm").addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const fname = document.getElementById("e_fname").value.trim();
+            const lname = document.getElementById("e_lname").value.trim();
+            const email = document.getElementById("e_email").value.trim();
+            const departmentId = document.getElementById("employeeDepartment").value;
+            const password = document.getElementById("employeePassword").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+
+            if (password !== confirmPassword) {
+                Swal.fire("Oops!", "Passwords do not match.", "error");
+                return;
+            }
+            try {
+                const response = await fetch("http://localhost:5000/register", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        e_fname: fname,
+                        e_lname: lname,
+                        e_email: email,
+                        companyId: document.getElementById("companySelect").value,
+                        departmentId,
+                        password
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    Swal.fire("Success", "Employee registered successfully!", "success");
+                    this.reset(); // Clear form
+                } else {
+                    Swal.fire("Error", data.error || "Something went wrong", "error");
+                }
+            } catch (err) {
+                console.error(err);
+                Swal.fire("Error", "Server not responding", "error");
+            }
+        });
+
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Manage Departments</title>
+        <!-- Tailwind CSS CDN -->
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"  crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="../css/style.css">
+    </head>
+    <body class="bg-gray-100 min-h-screen flex">
+        <!-- Sidebar -->
+        <div id="sidebar"></div>
+        
+        <main class="flex-grow p-6 ml-64 p-6">
+            <section id="departments-content" class="content-section">
+                <div class="bg-white rounded-lg shadow-sm p-6 mb-6 dashboard-card">
+                    <div id="topbar"></div>
+                </div>
+                
+    
+                <div class="p-6 bg-white rounded-lg shadow-md mb-6">
+                    <h2 class="text-xl font-semibold text-gray-700 mb-4">Add New Department</h2>
+                    <form id="createDepartment">
+                        <div class="mb-4">
+                            <label for="departmentName" class="block text-gray-700 text-sm font-bold mb-2">Department Name</label>
+                            <input type="text" id="departmentName" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="e.g., Human Resources">
+                        </div>
+                        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline transition duration-200">
+                            Add Department
+                        </button>
+                    </form>
+                </div>
+                <div class="p-6 bg-white rounded-lg shadow-md">
+                    <h2 class="text-xl font-semibold text-gray-700 mb-4">Existing Departments</h2>
+                    <table class="min-w-full bg-white rounded-lg overflow-hidden">
+                        <thead class="bg-gray-200">
+                            <tr>
+                                <th class="py-2 px-4 text-left text-gray-700">Department Name</th>
+                                <th class="py-2 px-4 text-left text-gray-700">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+        <script src="../js/script.js"></script>
+        <script src="../js/logout.js"></script>
+        <script src="../js/includes.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <!-- <script id="app-script">
+            $(document).ready(function() {
+               
+            });
+        </script> -->
+
+    </body>
+</html>

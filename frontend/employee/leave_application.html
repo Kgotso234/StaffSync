@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leave Management</title>
+    <link rel="stylesheet" href="../css/leave_pages.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Top Bar -->
+    <header class="topbar">
+        <img src="../assets/StaffSync Logo.png" alt="StaffSync Logo" class="logo">
+        <nav >
+            <a href="#">
+                <i class="fa-solid fa-bell"></i> Notifications
+            </a>
+            <a href="/employee/apply">
+                <i class="fa-duotone fa-solid fa-calendar-days"></i> Apply
+            </a>
+            <a href="/employee/leave-history">
+                <i class="fa-solid fa-file"></i> View Leaves
+            </a>
+            
+            <a href="#" class="user-login">
+                <i class="fas fa-user-circle fa-2x" style="color:#3b82f6;"></i>
+                <span class="login-text">Login</span>
+            </a>
+        </nav>
+    </header>
+    <div class="main-content">
+        <h1>Apply for Leave</h1>
+        <!-- Leave Application Form Section -->
+            <form id="leaveApplicationForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <div class="border-label-group">
+                            <label for="leaveType">Leave Type</label>
+                            <select id="leaveType" name="leaveType" required>
+                                <option value="option">-- select leave type --</option> 
+                                <!-- options will come from backend -->
+                            </select>
+                            <div id="leaveTypeError" class="error-message"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="border-label-group">
+                            
+                        </div>
+                        <!-- Placeholder for future use, e.g., Employee Name -->
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <div class="border-label-group">
+                            <label for="startDate">Start Date</label> 
+                            <input type="date" id="startDate" name="startDate" required>
+                            <div id="startDateError" class="error-message"></div>
+                        </div>      
+                    </div>
+                    <div class="form-group">
+                        <div class="border-label-group">
+                            <label for="endDate">End Date</label> 
+                            <input type="date" id="endDate" name="endDate" required>
+                            <div id="endDateError" class="error-message"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="border-label-group">
+                        <label for="reason">Reason for Leave</label>
+                        <textarea id="reason" name="reason" rows="4" placeholder="Please provide a brief reason for your leave..." required></textarea>     
+                    </div>   
+                </div> 
+                <div class="form-btn">
+                    
+                    <button type="submit" class="submit-btn">Submit</button>
+                    <button type="reset" class="reset-btn">Clear</button>
+                </div>
+            </form>
+        </section>
+
+        
+    </div>
+
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../js/leave.js"></script>
+
+</body>
+</html>

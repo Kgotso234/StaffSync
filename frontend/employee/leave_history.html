@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leave Management</title>
+    <!-- <link rel="stylesheet" href="../css/leave_pages.css"> -->
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- <link rel="stylesheet" href="../css/leave_pages.css"> -->
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Top Bar -->
+    <header class="topbar">
+        <img src="../assets/StaffSync Logo.png" alt="StaffSync Logo" class="logo">
+        <nav >
+            <a href="#">
+                <i class="fa-solid fa-bell"></i> Notifications
+            </a>
+            <a href="/employee/apply">
+                <i class="fa-duotone fa-solid fa-calendar-days"></i> Apply
+            </a>
+            <a href="/employee/leave-history">
+                <i class="fa-solid fa-file"></i> View Leaves
+            </a>
+            
+            <a href="#" class="user-login">
+                <i class="fas fa-user-circle fa-2x" style="color:#3b82f6;"></i>
+                <span class="login-text">Login</span>
+            </a>
+        </nav>
+    </header>
+    <div class="main-content">
+        <!-- Leave History Section -->
+        <section class="card">
+            <h2>Leave History</h2>
+            <div class="history-table-wrapper">
+                <table id="leaveHistoryTable">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Reason</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Leave requests will be dynamically inserted here -->
+                    </tbody> 
+                </table>
+            </div>
+        </section>
+        
+    </div> 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+            //get all leaves for employee
+            document.addEventListener("DOMContentLoaded", () => {
+                const token = localStorage.getItem("token");
+
+                if(!token){
+                    window.location.href = "../login";
+                    return ;
+                }
+
+                fetch("http://localhost:5000/leave/get-leaves", {
+                    method: "GET",
+                    headers: {Authorization: `Bearer ${token}`},
+                }).then(res => res.json())
+                .then(data => {
+                    if (data.leaves && data.leaves.length > 0) {
+                        renderLeaves(data.leaves);
+                    } else {
+                        console.warn("No leaves found.");
+                        const tbody = document.querySelector("#leaveHistoryTable tbody");
+                        tbody.innerHTML = `<tr><td colspan="5" class="text-center">No leave records found.</td></tr>`;
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching leaves:", error);
+                });
+
+
+                function renderLeaves(leaves){
+                    const tbody = document.querySelector("#leaveHistoryTable tbody");
+                    tbody.innerHTML = " "; //clear the placeholder row
+
+                    leaves.forEach(leave => {
+                        const row = document.createElement("tr");
+                        // Determine status class
+                        let statusClass = "";
+                        switch ((leave.status || "Pending").toLowerCase()) {
+                            case "pending":
+                                statusClass = "status-badge status-pending";
+                                break;
+                            case "approved":
+                                statusClass = "status-badge status-approved";
+                                break;
+                            case "rejected":
+                                statusClass = "status-badge status-rejected";
+                                break;
+                            default:
+                                statusClass = "status-badge"; // fallback
+                        }
+
+                        row.innerHTML = `
+                            <td class="border-t py-2 px-4 text-gray-800">${leave.leaveTypeId?.name || "N/A"}</td>
+                            <td class="border-t py-2 px-4 text-gray-800">${new Date(leave.startDate).toLocaleDateString()}</td>
+                            <td class="border-t py-2 px-4 text-gray-800">${new Date(leave.endDate).toLocaleDateString()}</td>
+                            <td class="border-t py-2 px-4 text-gray-800">${leave.reason || "N/A"}</td>
+                            <td class="border-t py-2 px-4 text-gray-800">
+                                <span class="${statusClass}">${leave.status || "Pending"}</span>
+                            </td>
+                        `;
+                        tbody.appendChild(row);
+                    });
+                }
+            });
+    </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
