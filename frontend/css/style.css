@@ -9,60 +9,60 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
-    }
+}
 
-    .dashboard-card:hover {
+.dashboard-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-    }
+}
 
-    .progress-bar {
-    height: 8px;
-    border-radius: 4px;
-    overflow: hidden;
-    }
+.progress-bar {
+height: 8px;
+border-radius: 4px;
+overflow: hidden;
+}
 
-    .modal {
-    transition: opacity 0.3s ease;
-    }
+.modal {
+transition: opacity 0.3s ease;
+}
 
-    @media (max-width: 768px) {
-    .dashboard-grid {
-        grid-template-columns: 1fr;
-    }
-    }
+@media (max-width: 768px) {
+.dashboard-grid {
+    grid-template-columns: 1fr;
+}
+}
 
-    .btn-primary {
-    background-color: #4f46e5;
-    transition: all 0.2s ease;
-    }
+.btn-primary {
+background-color: #4f46e5;
+transition: all 0.2s ease;
+}
 
-    .btn-primary:hover {
-    background-color: #4338ca;
-    }
+.btn-primary:hover {
+background-color: #4338ca;
+}
 
-    .btn-secondary {
-    background-color: #f3f4f6;
-    color: #1f2937;
-    transition: all 0.2s ease;
-    }
+.btn-secondary {
+background-color: #f3f4f6;
+color: #1f2937;
+transition: all 0.2s ease;
+}
 
-    .btn-secondary:hover {
-    background-color: #e5e7eb;
-    }
+.btn-secondary:hover {
+background-color: #e5e7eb;
+}
 
-    .skeleton {
-    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-    }
+.skeleton {
+animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
 
-    @keyframes pulse {
-    0%, 100% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0.5;
-    }
-    }
+@keyframes pulse {
+0%, 100% {
+    opacity: 1;
+}
+50% {
+    opacity: 0.5;
+}
+}
 
 .log-area::-webkit-scrollbar {
     width: 8px;
@@ -124,8 +124,126 @@ body {
     margin: 0;
     display: block;
 }
-.user-login .login-text {
+/* .user-login .login-text {
   display: none;
+} */
+.right-nav{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.user-profile{
+    position: relative;
+}
+.dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #555;
+    color: #fff;
+    padding: 12px;              /* more padding */
+    border-radius: 8px;         /* smoother corners */
+    margin-top: 10px;
+    min-width: 220px;           /* wider container */
+    z-index: 1050;
+}
+
+.dropdown-item {
+    display: flex;              /* so icon + text align */
+    align-items: center;
+    gap: 10px;                  /* spacing between icon and text */
+    padding: 10px 14px;
+    cursor: pointer;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #fff;
+    font-size: 15px;            /* slightly bigger font */
+}
+
+.dropdown-item i {
+    font-size: 16px;            /* icon size */
+    width: 20px;                /* reserve space for alignment */
+    text-align: center;
+}
+
+.dropdown-item:hover {
+    background-color: #666;
+    color: white;
+}
+.dropdown-item:last-child {
+    margin-bottom: 0;
+}
+.sec-nav{
+    display: flex;
+    height: 80px;
+    position: fixed;
+    top: 80px;
+    left: 0;
+    right: 0;
+    z-index: 1020;
+}
+.section{
+    margin-top: 20px;
+    height: 80px;
+    flex: 1;
+    background:linear-gradient(to right, #2ed5b9, #3b82f6);;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 15px 30px;
+    position: relative;
+    z-index: 1;
+}
+.items{
+    display: flex;
+    gap: 8px;
+    margin-right: 50px;
+}
+.item{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 20px;
+    width: 110px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.item:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    color: white;
+}
+.item.active {
+    background: rgba(35, 112, 142, 0.8);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    color: white;
+}
+.icon {
+    width: 24px;
+    height: 24px;
+    margin-bottom: 4px;
+    color: white;
+}
+
+.text {
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    color: white;
+}
+.user-info {
+    position: relative;
+    left: -35%;
 }
 /* main content */
 .main-content{

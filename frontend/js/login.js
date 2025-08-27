@@ -70,6 +70,7 @@ async function handleLogin(e) {
         });
 
         const data = await res.json();
+        console.log("Login Response:", data);
 
         if (!res.ok) {
             // Use the error message from the backend, or a default one

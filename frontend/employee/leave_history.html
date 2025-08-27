@@ -4,34 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leave Management</title>
-    <!-- <link rel="stylesheet" href="../css/leave_pages.css"> -->
+    <link rel="stylesheet" href="../css/leave_pages.css">
     <link rel="stylesheet" href="../css/style.css">
-    <!-- <link rel="stylesheet" href="../css/leave_pages.css"> -->
-    <!-- FontAwesome -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Top Bar -->
-    <header class="topbar">
-        <img src="../assets/StaffSync Logo.png" alt="StaffSync Logo" class="logo">
-        <nav >
-            <a href="#">
-                <i class="fa-solid fa-bell"></i> Notifications
-            </a>
-            <a href="/employee/apply">
-                <i class="fa-duotone fa-solid fa-calendar-days"></i> Apply
-            </a>
-            <a href="/employee/leave-history">
-                <i class="fa-solid fa-file"></i> View Leaves
-            </a>
-            
-            <a href="#" class="user-login">
-                <i class="fas fa-user-circle fa-2x" style="color:#3b82f6;"></i>
-                <span class="login-text">Login</span>
-            </a>
-        </nav>
-    </header>
-    <div class="main-content">
+    <div id="top"></div>
+    <div id="topbar2"></div>
+
+    <div class="main-content" style="margin-top: 100px;">
         <!-- Leave History Section -->
         <section class="card">
             <h2>Leave History</h2>
@@ -53,8 +35,13 @@
             </div>
         </section>
         
-    </div> 
+    </div>
+    
+     
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../js/layout.js"></script>
+    <script src="../js/logout.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
             //get all leaves for employee
             document.addEventListener("DOMContentLoaded", () => {
