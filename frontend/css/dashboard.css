@@ -1,0 +1,472 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+    --primary: #4361ee;
+    --secondary: #3f37c9;
+    --success: #4cc9f0;
+    --warning: #f72585;
+    --danger: #e63946;
+    --light: #f8f9fa;
+    --dark: #212529;
+    --annual: #4caf50;
+    --sick: #ff9800;
+    --study: #2196f3;
+    --personal: #9c27b0;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
+body {
+    background-color: #f5f7fb;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+  max-width: calc(1400px - 18rem);
+  margin: 0 auto;
+  padding: 0 20px;
+  margin-left: 20rem; /* matches sidebar width */
+  transition: margin-left 0.2s ease-in-out;
+}
+
+
+
+/* Dashboard Content */
+.dashboard {
+    padding: 30px 0;
+}
+
+.section-title {
+    margin-bottom: 20px;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--dark);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Leave Balance Cards */
+.leave-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card-annual {
+    border-top: 5px solid var(--annual);
+}
+
+.card-sick {
+    border-top: 5px solid var(--sick);
+}
+
+.card-study {
+    border-top: 5px solid var(--study);
+}
+
+.card-personal {
+    border-top: 5px solid var(--personal);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.card-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: white;
+}
+
+.icon-annual {
+    background-color: var(--annual);
+}
+
+.icon-sick {
+    background-color: var(--sick);
+}
+
+.icon-study {
+    background-color: var(--study);
+}
+
+.icon-personal {
+    background-color: var(--personal);
+}
+
+.card-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: #666;
+}
+
+.card-value {
+    font-size: 32px;
+    font-weight: 700;
+    margin: 10px 0;
+}
+
+.progress-bar {
+    height: 8px;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 15px 0;
+}
+
+.progress {
+    height: 100%;
+    border-radius: 4px;
+}
+
+.progress-annual {
+    background-color: var(--annual);
+    width: 75%;
+}
+
+.progress-sick {
+    background-color: var(--sick);
+    width: 25%;
+}
+
+.progress-study {
+    background-color: var(--study);
+    width: 60%;
+}
+
+.progress-personal {
+    background-color: var(--personal);
+    width: 90%;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #777;
+}
+
+.warning {
+    color: var(--danger);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+/* Upcoming Leave Section */
+.upcoming-leave {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: var(--shadow);
+    margin-bottom: 40px;
+    overflow-x: auto;
+}
+
+.calendar-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.calendar-month {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.calendar-arrows {
+    display: flex;
+    gap: 10px;
+}
+
+.arrow {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.arrow:hover {
+    background-color: #e0e0e0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+}
+
+th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #555;
+}
+
+td {
+    position: relative;
+    height: 50px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+td:hover {
+    background-color: #f9f9f9;
+}
+
+.today {
+    background-color: rgba(67, 97, 238, 0.1);
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.approved {
+    background-color: rgba(76, 175, 80, 0.15);
+    color: var(--annual);
+    font-weight: 500;
+}
+
+.pending {
+    background-color: rgba(255, 152, 0, 0.15);
+    color: var(--sick);
+    font-weight: 500;
+}
+
+.rejected {
+    background-color: rgba(230, 57, 70, 0.15);
+    color: var(--danger);
+    font-weight: 500;
+    text-decoration: line-through;
+}
+
+.event-dot {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+}
+
+.approved-dot {
+    background-color: var(--annual);
+}
+
+.pending-dot {
+    background-color: var(--sick);
+}
+
+.rejected-dot {
+    background-color: var(--danger);
+}
+
+/* Quick Actions */
+.quick-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.action-card {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.action-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.action-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.action-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+}
+
+.action-title {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.btn {
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    color: white;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(45deg, var(--secondary), var(--primary));
+    box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4);
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+}
+
+.btn-outline:hover {
+    background-color: rgba(67, 97, 238, 0.1);
+
+    
+}
+/* Leave status highlights */
+.upcoming-leave td.approved { background-color: #c8e6c9; }
+.upcoming-leave td.pending { background-color: #fff9c4; }
+.upcoming-leave td.rejected { background-color: #ffcdd2; }
+
+/* Today highlight */
+.upcoming-leave td.today { border: 2px solid #2196f3; }
+
+/* Event dots */
+.event-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.event-dot.approved-dot { background-color: green; }
+.event-dot.pending-dot { background-color: orange; }
+.event-dot.rejected-dot { background-color: red; }
+
+/* Make td position relative so dot positions correctly */
+.upcoming-leave td { position: relative; }
+
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .leave-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .leave-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .quick-actions {
+        grid-template-columns: 1fr;
+    }
+    
+    th, td {
+        padding: 8px 5px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 576px) {
+    .profile {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .action-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+    
+    .calendar-nav {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
+
+
+

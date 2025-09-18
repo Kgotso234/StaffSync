@@ -7,74 +7,134 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/index.css">
 </head>
 <body class="bg-gray-100">
-    <!-- Top Bar -->
-    <header class="topbar">
-        <img src="../assets/StaffSync Logo.png" alt="StaffSync Logo" class="logo">
-        <nav >
-           <a href="#">
-                <i class="fas fa-home mobile-icon"></i> Home
-            </a>
-            <a href="#" class="user-login">
-                <i class="fas fa-user-circle fa-2x" style="color:#3b82f6;"></i>
-                <span class="login-text">Login</span>
-            </a>
-        </nav>
-    </header>
-    <main class="main-content">
-        <h3 id="title">Employee Login</h3>
+    <div class="login-container">
+        <div class="login-wrapper">
+            <div class="login-card">
+                <div class="card-header">
+                    <h1 class="card-title">Welcome Back</h1>
+                    <p class="card-description">Sign in to your account to continue</p>
+                </div>
 
-        <form action="" id="loginForm">
+                <div class="card-content">
+                    <div class="tabs-container">
+                        <div class="tabs-list">
+                            <button class="tab-trigger active" data-tab="employee">Employee</button>
+                            <button class="tab-trigger" data-tab="administrator">Administrator</button>
+                        </div>
 
-            <div class="radio-group">
-                <label class="radio-label">
-                    <input type="radio" name="user_type" value="admin"> Administrator
-                </label>
-                <label class="radio-label">
-                    <input type="radio" name="user_type" value="employee" checked> Employee
-                </label>
+                        <!-- Employee Login Form -->
+                        <div class="tab-content active" id="employee-tab">
+                            <form class="login-form" id="employeeLoginForm">
+                                <div class="form-group">
+                                    <label for="employee-email" class="form-label">Email Address</label>
+                                    <input
+                                    id="employee-email"
+                                    type="email"
+                                    placeholder="Enter your email"
+                                    class="form-input"
+                                    required
+                                    />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="employee-password" class="form-label">Password</label>
+                                    <div class="password-input-container">
+                                        <input
+                                            id="employee-password"
+                                            type="password"
+                                            placeholder="Enter your password"
+                                            class="form-input password-input"
+                                            required
+                                        />
+                                        <button type="button" class="password-toggle" data-target="employee-password">
+                                            <svg class="eye-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                                <circle cx="12" cy="12" r="3"/>
+                                            </svg>
+                                            <svg class="eye-off-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+                                                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+                                                <line x1="1" y1="1" x2="23" y2="23"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="forgot-password">
+                                    <button type="button" class="forgot-link">Forgot password?</button>
+                                    </div>
+                                </div>
+
+                                <div class="button-group">
+                                    <button type="submit" class="btn btn-login">Sign In</button>
+                                    <div class="btn btn-register">
+                                    <a href="/register">Register</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Administrator Login Form -->
+                        <div class="tab-content" id="administrator-tab">
+                            <form class="login-form" id="adminLoginForm">
+                            <div class="form-group">
+                                <label for="admin-email" class="form-label">Administrator Email</label>
+                                <input
+                                id="admin-email"
+                                type="email"
+                                placeholder="Enter your admin email"
+                                class="form-input"
+                                required
+                                />
+                            </div>
+
+                            <div class="form-group">
+                                
+                                <label for="admin-password" class="form-label">Password</label>
+                                <div class="password-input-container">
+                                    <input
+                                        id="admin-password"
+                                        type="password"
+                                        placeholder="Enter your password"
+                                        class="form-input password-input"
+                                        required
+                                    />
+                                    <button type="button" class="password-toggle" data-target="admin-password">
+                                        <svg class="eye-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                            <circle cx="12" cy="12" r="3"/>
+                                        </svg>
+                                        <svg class="eye-off-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+                                            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+                                            <line x1="1" y1="1" x2="23" y2="23"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="forgot-password">
+                                <button type="button" class="forgot-link">Forgot password?</button>
+                                </div>
+                            </div>
+
+                            <div class="button-group single">
+                                <button type="submit" class="btn btn-login">Sign In as Administrator</button>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
-            
-            <div class="login-container">
-                <div class="input-wrapper">
-                    <label for="emailInput" id="emailLabel">Email:</label>
-                    <input type="email" name="email" id="emailInput" class="input-field" placeholder="Enter your email address" required>
-                </div>
-                <div class="input-wrapper password-field">
-                    <label for="password">Password:</label>
-                    <div class="password-container">
-                        <input type="password" name="password" id="password" required>
-                        <i class="toggle-password fas fa-eye" onclick="togglePassword()" title="Show/Hide password"></i>
-                    </div>
-                </div>
-                
-                <div class="forgot-password">
-                    <a href="#">Forgot password?</a>
-                </div>
-
-                <div class="button-group">
-                    <button type="submit" class="btn">Login</button>
-                </div>
-
-                <div class="or-register-wrapper">
-                    <div class="or-divider">
-                        <div class="line"></div>
-                        <div class="or-text">Or</div>
-                        <div class="line"></div>
-                    </div>
-                    <div class="register-link">
-                        <a href="/register">Register</a>
-                    </div>
-                </div>
-            </div>
-        </form>
+        </div>
         
-        <footer class="site-footer">
-            © 2025 StaffSync. All rights reserved. 
-        </footer>
-    </main>
+    </div>
+    <footer class="site-footer">
+        © 2025 StaffSync. All rights reserved. 
+    </footer>
+    
+
+
+   
+        
+       
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../js/login.js"></script>
 </body>

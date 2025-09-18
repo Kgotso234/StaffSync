@@ -8,7 +8,7 @@ const leaveBalanceSchema = new mongoose.Schema({
     },
     leaveTypeId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "leaveTypes",
+        ref: "LeaveTypes",
         required: true,
     }, allocatedDays: {
         type: Number,
@@ -29,4 +29,4 @@ const leaveBalanceSchema = new mongoose.Schema({
     }
 }, { timestamps: true});
 
-module.exports = mongoose.model("leaveBalance", leaveBalanceSchema);
+module.exports = mongoose.models.leaveBalance || mongoose.model("leaveBalance", leaveBalanceSchema);

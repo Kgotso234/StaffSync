@@ -4,43 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register Account</title>
-    <!-- Tailwind CSS CDN -->
+    <!-- css -->
+     <link rel="stylesheet" href="../css/sidebar.css">
+     <!-- <link rel="stylesheet" href="../css/dashboard.css"> -->
+    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="../css/style.css">
+    <!-- Boxicons icons -->
+    <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"/>
+    
 </head>
-<body class="bg-gray-100 min-h-screen flex">
-    <!-- Sidebar -->
-    <aside class="w-64 bg-gray-800 text-white flex flex-col shadow-lg rounded-r-lg p-4">
-        <!-- StaffSync Logo -->
-        <div class="flex items-center justify-center mb-6 mt-2">
-            <img src="../assets/file_00000000c38461f7af170a1413ed911a.png" alt="StaffSync Logo" class="h-14 w-auto object-contain rounded-lg">
+<body class="bg-gray-100 min-h-screen ">
+    <nav class="sidebar locked">
+      <div class="logo_items flex">
+        <span class="nav_image">
+          <img src="../assets/logo.jpeg" alt="logo_img" />
+        </span>
+        <span class="logo_name">StaffSync</span>
+        <i class="bx bx-lock-alt" id="lock-icon" title="Unlock Sidebar"></i>
+        <i class="bx bx-x" id="sidebar-close"></i>
+      </div>
+      <div class="menu_container">
+        <div class="menu_items">
+          <ul class="menu_item">
+            
+            <li class="item">
+              <a href="/login" class="link flex">
+                <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                <span>Login</span>
+              </a>
+            </li>
+          </ul>
+          
+         
         </div>
-        <!-- Sidebar Navigation/Content Below the Log -->
-        <nav class="flex-grow">
-            <h3 class="font-semibold text-gray-300 mb-3">Navigation</h3>
-            <ul class="space-y-2">
-                <li>
-                    <a href="/login" class="nav-link flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded-md transition duration-200">
-                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7" />
-                        </svg>
-                        Login
-                    </a>
-                </li>
-                <li>
-                    <a href="/register" class="nav-link flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded-md transition duration-200">
-                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
-                        </svg>
-                        Register
-                    </a>
-                </li>
-                
-            </ul>
-        </nav>
-    </aside>
+        
+      </div>
+    </nav>    
     <!-- Main Content Area -->
-    <main class="flex-grow p-6">
+    <main class="main-content">
         <section id="employees-content" class="content-section">
             <h1 class="text-3xl font-bold text-gray-800 mb-4">Employee Registration</h1>
             <p class="text-gray-600 mb-6">Register to access the system. </p>

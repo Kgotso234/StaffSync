@@ -3,7 +3,10 @@ function doLogout() {
     window.location.href = "/login";
 }
 
-async function handleLogoutClick() {
+async function handleLogoutClick(e) {
+    // stop <a href="#"> from navigating
+    if (e) e.preventDefault();
+
     if (window.Swal) {
         const res = await Swal.fire({
             title: 'Log out?',
@@ -21,16 +24,16 @@ async function handleLogoutClick() {
     }
 }
 
-// New function to attach listener after sidebar loads
 function attachLogoutListener() {
     const btn = document.getElementById("btn-logout");
     if (btn) {
         btn.addEventListener("click", handleLogoutClick);
     }
 
-    // Optional: for a topbar logout button
     const btnTop = document.getElementById("btn-logout-top");
     if (btnTop) {
         btnTop.addEventListener("click", handleLogoutClick);
     }
 }
+
+document.addEventListener("DOMContentLoaded", attachLogoutListener);

@@ -24,6 +24,7 @@ const adminLeaveRoute = require("./src/routes/adminLeaveRoute");
 const notificationRoutes = require("./src/routes/notificationRoutes");
 const adminDashboard = require("./src/routes/dashboardRoutes");
 const AdminReport = require("./src/routes/reportRoutes");
+const leaveBalanceRoute = require("./src/routes/leaveBalanceRoute");
 
 // Serve static files from /frontend
 app.use(express.static(path.join(__dirname, "../frontend")));
@@ -59,6 +60,9 @@ app.get("/admin/settings", (req, res) => {
 });
 
 //employee pages
+app.get("/employee/dashboard", (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend/employee/Dashboard.html"));
+});
 app.get("/employee/apply", (req, res) => {
     res.sendFile(path.join(__dirname, "../frontend/employee/leave_application.html"));
 });
@@ -78,6 +82,7 @@ app.use("/admin/leaves", adminLeaveRoute);
 app.use("/notifications", notificationRoutes);
 app.use("/dashboard", adminDashboard);
 app.use("/report", AdminReport);
+app.use("/leave-balance", leaveBalanceRoute);
 
 //dump
 // const leaveTypesRoutes = require("./src/routes/leaveTypeRoute"); // adjust path

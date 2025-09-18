@@ -15,36 +15,38 @@ function includeHTML(id, file) {
         .catch(e => console.error(e));
 }
 
-
-includeHTML("top", "../layout/top.html").then(() => {
-
-    const profileDropdown = document.querySelector('.user-profile');
-    const dropdown = document.querySelector('.user-profile .dropdown');
-
-    if (profileDropdown && dropdown) {
-        profileDropdown.addEventListener('click', (e) => {
-            e.stopPropagation(); // prevent closing immediately
-            dropdown.style.display =
-                dropdown.style.display === 'block' ? 'none' : 'block';
-        });
-
-        // Close dropdown if you click anywhere else
-        document.addEventListener('click', () => {
-            dropdown.style.display = 'none';
-        });
-    }
-
+includeHTML("sidebar", "../layout/employee/sidebar.html").then(() => {
+    // Sidebar is loaded, now attach logout listener
     attachLogoutListener();
-        
-});
-includeHTML("topbar2", "../layout/topbar2.html").then(()=>{
 
-    const emp = JSON.parse(localStorage.getItem("employee"));
+
+    //populate user info
+    const emp = localStorage.getItem("employee");
     if (emp) {
-        $("#greeting").text(`Welcome to ${emp.e_fname}`);
-    } else {
-        $("#greeting").text("Welcome");
+        try {
+            const employee = JSON.parse(emp);
+            const nameElement  = document.querySelector('data_text .name');
+            const emailElement = document.querySelector('.data_text .email');
+           if (employee && nameElement && emailElement) {
+                nameElement.textContent = employee.e_fname + " " + employee.e_lname;
+                emailElement.textContent = employee.e_email;
+
+                document.querySelector('.data_text').classList.remove('hide');
+           }
+        } catch (error) {
+            console.error("Error parsing employee data from localStorage:", error);
+        }
     }
+});
+
+includeHTML("topbar", "../layout/employee/topbar").then(()=>{
+
+    // const emp = JSON.parse(localStorage.getItem("employee"));
+    // if (emp) {
+    //     $("#greeting").text(`Welcome to ${emp.e_fname}`);
+    // } else {
+    //     $("#greeting").text("Welcome");
+    // }
 
     // Set current date
     const currentDate = new Date();

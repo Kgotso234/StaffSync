@@ -1,59 +1,66 @@
-<!-- Sidebar -->
-<aside class="fixed top-0 left-0 w-64 h-screen bg-gray-800 text-white flex flex-col shadow-lg rounded-r-lg p-4">
-    <!-- StaffSync Logo -->
-    <div class="flex items-center justify-center mb-4 mt-2">
-        <img src="../assets/StaffSync Logo.png" alt="StaffSync Logo" class="logo object-contain rounded-lg">
-    </div>
-    <!-- Sidebar Navigation/Content Below the Log -->
-    <nav class="flex-grow">
-        <h3 class="font-semibold text-gray-300 mb-3">Navigation</h3>
-        <ul class="space-y-2">
-            <li>
-                <a href="/admin/dashboard" id="nav-dashboard" class="nav-link flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded-md transition duration-200" data-target="dashboard-content">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-                    Dashboard
-                </a>
+<nav class="sidebar locked">
+      <div class="logo_items flex">
+        <span class="nav_image">
+          <img src="../assets/logo.jpeg" alt="logo_img" />
+        </span>
+        <span class="logo_name">StaffSync</span>
+        <i class="bx bx-lock-alt" id="lock-icon" title="Unlock Sidebar"></i>
+        <i class="bx bx-x" id="sidebar-close"></i>
+      </div>
+      <div class="menu_container">
+        <div class="menu_items">
+          <ul class="menu_item">
+            <!-- <div class="menu_title flex">
+              <span class="title">Dashboard</span>
+              <span class="line"></span>
+            </div> -->
+            
+            <li class="item">
+              <a href="/admin/dashboard" class="link flex">
+                <i class="bx bx-grid-alt"></i>
+                <span>Dashboard</span>
+              </a>
+            </li>
+            <li class="item">
+              <a href="/admin/departments" class="link flex">
+                <i class="fa-solid fa-building"></i> 
+                <span>Manage Departments</span>
+              </a>
+            </li>
+            <li class="item">
+              <a href="/admin/employees" class="link flex">
+                <i class="fa-solid fa-users"></i>
+                <span>Manage Employees</span>
+              </a>
             </li>
             <li>
-                <a href="/admin/departments" id="nav-departments" class="nav-link flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded-md transition duration-200" data-target="departments-content">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
-                    Departments
-                </a>
+                <a href="/admin/leaves" class="link flex">
+                    <i class="fa-solid fa-calendar"></i>
+                    <span>Manage Leaves</span>
+              </a>
             </li>
-            <li>
-                <a href="/admin/employees" id="nav-employees" class="nav-link flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded-md transition duration-200" data-target="employees-content">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H2m2 0h11m-11 0l-1.447-1.447M14 12h-2m-4 0H5m14 0a2 2 0 100-4m-6 4a2 2 0 100-4m-6 4a2 2 0 100-4"></path></svg>
-                    Employees
-                </a>
+            <li class="item">
+              <a href="#" class="link flex">
+                <i class="fa-solid fa-gear"></i>
+                <span>Setting</span>
+              </a>
             </li>
-            <li>
-                <a href="/admin/leaves" id="nav-leave" class="nav-link flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded-md transition duration-200" data-target="leave-content">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                    Manage Leaves
-                </a>
+            <li class="item">
+              <a  id="btn-logout" href="#" class="link flex">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                <span>Logout</span>
+              </a>
             </li>
-            <li>
-                <a href="/admin/setting" id="nav-settings" class="nav-link flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded-md transition duration-200" data-target="settings-content">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                    Settings
-                </a>
-            </li>
-            <li class="mt-4 pt-4 border-t border-gray-700">
-                <button id="btn-logout"
-                        class="w-full flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded-md transition duration-200"
-                        title="Log out" aria-label="Log out">
-                    <!-- Logout SVG icon -->
-                    <svg class="w-5 h-5 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        xmlns="http://www.w3.org/2000/svg">
-                    <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M10 17l5-5-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M15 12H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    <span>Logout</span>
-                </button>
-            </li>
-        </ul>
+          </ul>
+          
+        <div class="sidebar_profile flex">
+          <span class="nav_image">
+            <img class="user" src="../assets/user.png" alt="logo_img" />
+          </span>
+          <div class="data_text">
+            <span class="name">David Oliva</span>
+            <span class="email">david@gmail.com</span>
+          </div>
+        </div>
+      </div>
     </nav>
-    
-</aside>

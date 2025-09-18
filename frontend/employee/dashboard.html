@@ -1,876 +1,264 @@
 <!DOCTYPE html>
+<!-- Coding by CodingNepal || www.codingnepalweb.com -->
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Leave Management System</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style id="app-style">
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f5f7fa;
-        }
-        
-        .dashboard-card {
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
-        }
-        
-        .dashboard-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .progress-bar {
-            height: 8px;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-        
-        .modal {
-            transition: opacity 0.3s ease;
-        }
-        
-        @media (max-width: 768px) {
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        .btn-primary {
-            background-color: #4f46e5;
-            transition: all 0.2s ease;
-        }
-        
-        .btn-primary:hover {
-            background-color: #4338ca;
-        }
-        
-        .btn-secondary {
-            background-color: #f3f4f6;
-            color: #1f2937;
-            transition: all 0.2s ease;
-        }
-        
-        .btn-secondary:hover {
-            background-color: #e5e7eb;
-        }
-        
-        .skeleton {
-            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.5;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div id="app" class="min-h-screen">
-        <nav class="bg-white shadow-sm">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between h-16">
-                    <div class="flex">
-                        <div class="flex-shrink-0 flex items-center">
-                            <span class="text-indigo-600 text-2xl font-bold">LeaveWise</span>
-                        </div>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="hidden md:ml-4 md:flex-shrink-0 md:flex md:items-center">
-                            <button class="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                <span class="sr-only">View notifications</span>
-                                <i class="fas fa-bell"></i>
-                            </button>
-                            <div class="ml-3 relative">
-                                <div>
-                                    <button type="button" class="bg-white rounded-full flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
-                                        <span class="sr-only">Open user menu</span>
-                                        <div class="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center">
-                                            <span class="text-indigo-800 font-medium text-sm" id="user-initials">JS</span>
-                                        </div>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Employee Dashboard</title>
+    <!-- css -->
+     <link rel="stylesheet" href="../css/sidebar.css">
+     <link rel="stylesheet" href="../css/dashboard.css">
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Boxicons ions -->
+    <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"/>
+  </head>
+  <body class="min-h-screen">
+    <nav class="sidebar locked">
+      <div class="logo_items flex">
+        <span class="nav_image">
+          <img src="../assets/logo.jpeg" alt="logo_img" />
+        </span>
+        <span class="logo_name">StaffSync</span>
+        <i class="bx bx-lock-alt" id="lock-icon" title="Unlock Sidebar"></i>
+        <i class="bx bx-x" id="sidebar-close"></i>
+      </div>
+      <div class="menu_container">
+        <div class="menu_items">
+          <ul class="menu_item">
+            <div class="menu_title flex">
+              <span class="title">Dashboard</span>
+              <span class="line"></span>
             </div>
-        </nav>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <!-- Role Selection - Only visible if user has both roles -->
-            <div id="role-switcher" class="mb-6 hidden">
-                <div class="bg-white rounded-lg shadow-sm p-4 flex space-x-4">
-                    <button id="employee-view-btn" class="flex-1 py-2 px-4 rounded-md bg-indigo-600 text-white font-medium">Employee View</button>
-                    <button id="manager-view-btn" class="flex-1 py-2 px-4 rounded-md bg-gray-200 text-gray-700 font-medium">Manager View</button>
-                </div>
+            <!-- <li class="item">
+              <a href="#" class="link flex">
+                <i class="bx bx-home-alt"></i>
+                <span>Overview</span>
+              </a>
+            </li> -->
+            <li class="item">
+              <a href="/employee/dashboard" class="link flex">
+                <i class="bx bx-grid-alt"></i>
+                <span>Dashboard</span>
+              </a>
+            </li>
+          </ul>
+          <ul class="menu_item">
+            <div class="menu_title flex">
+              <span class="title">Leaves</span>
+              <span class="line"></span>
             </div>
-
-            <!-- Welcome Section -->
-            <div class="bg-white rounded-lg shadow-sm p-6 mb-6 dashboard-card">
-                <div class="flex flex-col md:flex-row justify-between">
-                    <div>
-                        <h1 id="greeting" class="text-2xl font-bold text-gray-900">Welcome back, John Smith</h1>
-                        <p id="user-info" class="mt-1 text-gray-500">Department: Engineering, Position: Senior Developer</p>
-                    </div>
-                    <div class="mt-4 md:mt-0">
-                        <p class="text-sm text-gray-500">Today's Date: <span id="current-date" class="font-medium">May 15, 2025</span></p>
-                    </div>
-                </div>
+            <li class="item">
+              <a href="/employee/apply" class="link flex">
+                <i class="fa-regular fa-ticket"></i> 
+                <span>Apply Leave</span>
+              </a>
+            </li>
+            <li class="item">
+              <a href="/employee/leave-history" class="link flex">
+                <i class='bx  bx-history'></i> 
+                <span>History</span>
+              </a>
+            </li>
+          </ul>
+          <ul class="menu_item">
+            <div class="menu_title flex">
+              <span class="title">Setting</span>
+              <span class="line"></span>
             </div>
-
-            <!-- Employee Dashboard -->
-            <!-- <div id="employee-dashboard"> -->
-                <!-- <div class="grid grid-cols-1 md:grid-cols-2 gap-6 dashboard-grid"> -->
-                    <!-- Leave Balance Card -->
-                    <!-- <div class="bg-white rounded-lg shadow-sm p-6 dashboard-card">
-                        <h2 class="text-lg font-medium text-gray-900 mb-4">Leave Balance</h2>
-                        
-                        <div class="space-y-4"> -->
-                            <!-- Annual Leave -->
-                            <!-- <div>
-                                <div class="flex justify-between items-center mb-1">
-                                    <span class="text-sm font-medium text-gray-700">Annual Leave</span>
-                                    <span class="text-sm text-gray-500" id="annual-leave-balance">15 days remaining / 5 used</span>
-                                </div>
-                                <div class="progress-bar bg-gray-200">
-                                    <div class="bg-indigo-600 h-full" style="width: 75%"></div>
-                                </div>
-                            </div> -->
-                            
-                            <!-- Sick Leave -->
-                            <!-- <div>
-                                <div class="flex justify-between items-center mb-1">
-                                    <span class="text-sm font-medium text-gray-700">Sick Leave</span>
-                                    <span class="text-sm text-gray-500" id="sick-leave-balance">8 days remaining / 2 used</span>
-                                </div>
-                                <div class="progress-bar bg-gray-200">
-                                    <div class="bg-green-500 h-full" style="width: 80%"></div>
-                                </div>
-                            </div>
-                            
-                            <!-- Other Leave -->
-                            <!-- <div>
-                                <div class="flex justify-between items-center mb-1">
-                                    <span class="text-sm font-medium text-gray-700">Other Leave</span>
-                                    <span class="text-sm text-gray-500" id="other-leave-balance">3 days remaining / 0 used</span>
-                                </div>
-                                <div class="progress-bar bg-gray-200">
-                                    <div class="bg-amber-500 h-full" style="width: 100%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> --> -->
-
-                    <!-- Requests & Status Card -->
-                    <!-- <div class="bg-white rounded-lg shadow-sm p-6 dashboard-card">
-                        <h2 class="text-lg font-medium text-gray-900 mb-4">Requests & Status</h2>
-                        
-                        <div class="mb-6 space-y-2">
-                            <div class="flex justify-between items-center py-2 border-b border-gray-100">
-                                <span class="text-sm text-gray-700">Pending Requests:</span>
-                                <span id="pending-requests" class="text-sm font-medium text-amber-600">1</span>
-                            </div>
-                            <div class="flex justify-between items-center py-2 border-b border-gray-100">
-                                <span class="text-sm text-gray-700">Upcoming Approved Leave:</span>
-                                <span id="upcoming-leave" class="text-sm font-medium text-green-600">Jun 10 - Jun 17, 2025</span>
-                            </div>
-                        </div>
-                        
-                        <div class="flex flex-col space-y-3">
-                            <button id="submit-request-btn" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 btn-primary">
-                                Submit New Leave Request
-                            </button>
-                            <button id="track-status-btn" class="w-full py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 btn-secondary">
-                                Track Approval Status
-                            </button>
-                            <button id="view-history-btn" class="w-full py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 btn-secondary">
-                                View Leave History
-                            </button>
-                        </div>
-                    </div>
-                </div> -->
-
-                <!-- Recent Leave History -->
-                <!-- <div class="mt-6 bg-white rounded-lg shadow-sm p-6 dashboard-card">
-                    <h2 class="text-lg font-medium text-gray-900 mb-4">Recent Leave History</h2>
-                    
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-200">
-                            <thead>
-                                <tr>
-                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">From</th>
-                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">To</th>
-                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Days</th>
-                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-gray-200">
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">Annual</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">May 1, 2025</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">May 5, 2025</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">5</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Approved</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">Sick</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">Apr 12, 2025</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">Apr 13, 2025</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">2</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Approved</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">Annual</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">Jun 10, 2025</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">Jun 17, 2025</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">8</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-amber-100 text-amber-800">Pending</span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-             -->
-            <!-- Manager Dashboard -->
-            <div id="manager-dashboard" class="#">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 dashboard-grid">
-                    <!-- Team Overview Card -->
-                    <div class="bg-white rounded-lg shadow-sm p-6 dashboard-card">
-                        <h2 class="text-lg font-medium text-gray-900 mb-4">Team Overview</h2>
-                        
-                        <div class="space-y-4">
-                            <div class="flex items-center p-4 bg-indigo-50 rounded-lg">
-                                <div class="flex-shrink-0 bg-indigo-100 rounded-full p-3">
-                                    <i class="fas fa-users text-indigo-600"></i>
-                                </div>
-                                <div class="ml-4">
-                                    <p class="text-sm font-medium text-gray-500">Total Team Members</p>
-                                    <p class="text-2xl font-semibold text-gray-900" id="total-team-members">12</p>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-center p-4 bg-green-50 rounded-lg">
-                                <div class="flex-shrink-0 bg-green-100 rounded-full p-3">
-                                    <i class="fas fa-umbrella-beach text-green-600"></i>
-                                </div>
-                                <div class="ml-4">
-                                    <p class="text-sm font-medium text-gray-500">On Leave Today</p>
-                                    <p class="text-2xl font-semibold text-gray-900" id="employees-on-leave">2</p>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-center p-4 bg-amber-50 rounded-lg">
-                                <div class="flex-shrink-0 bg-amber-100 rounded-full p-3">
-                                    <i class="fas fa-clock text-amber-600"></i>
-                                </div>
-                                <div class="ml-4">
-                                    <p class="text-sm font-medium text-gray-500">Pending Requests</p>
-                                    <p class="text-2xl font-semibold text-gray-900" id="manager-pending-requests">3</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Leave Insights Card -->
-                    <div class="bg-white rounded-lg shadow-sm p-6 dashboard-card">
-                        <h2 class="text-lg font-medium text-gray-900 mb-4">Leave Insights</h2>
-                        
-                        <div class="mb-4">
-                            <h3 class="text-sm font-medium text-gray-700 mb-2">Leave Type Usage</h3>
-                            <div class="flex space-x-2 mb-2">
-                                <div class="flex-1">
-                                    <div class="progress-bar bg-gray-200">
-                                        <div class="bg-indigo-600 h-full" style="width: 65%"></div>
-                                    </div>
-                                    <div class="flex justify-between mt-1">
-                                        <span class="text-xs text-gray-500">Annual</span>
-                                        <span class="text-xs font-medium text-gray-700" id="annual-leave-percentage">65%</span>
-                                    </div>
-                                </div>
-                                <div class="flex-1">
-                                    <div class="progress-bar bg-gray-200">
-                                        <div class="bg-green-500 h-full" style="width: 25%"></div>
-                                    </div>
-                                    <div class="flex justify-between mt-1">
-                                        <span class="text-xs text-gray-500">Sick</span>
-                                        <span class="text-xs font-medium text-gray-700" id="sick-leave-percentage">25%</span>
-                                    </div>
-                                </div>
-                                <div class="flex-1">
-                                    <div class="progress-bar bg-gray-200">
-                                        <div class="bg-amber-500 h-full" style="width: 10%"></div>
-                                    </div>
-                                    <div class="flex justify-between mt-1">
-                                        <span class="text-xs text-gray-500">Other</span>
-                                        <span class="text-xs font-medium text-gray-700" id="other-leave-percentage">10%</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="mb-4">
-                            <h3 class="text-sm font-medium text-gray-700 mb-2">Employees with Low Balances</h3>
-                            <ul class="text-sm text-gray-600 space-y-1">
-                                <li class="flex justify-between">
-                                    <span>Sarah Johnson</span>
-                                    <span class="text-red-500 font-medium">2 days left</span>
-                                </li>
-                                <li class="flex justify-between">
-                                    <span>Michael Chen</span>
-                                    <span class="text-red-500 font-medium">3 days left</span>
-                                </li>
-                            </ul>
-                        </div>
-                        
-                        <div>
-                            <h3 class="text-sm font-medium text-gray-700 mb-2">Upcoming Approved Leaves (Next 7 Days)</h3>
-                            <ul class="text-sm text-gray-600 space-y-1">
-                                <li class="flex justify-between">
-                                    <span>Alex Williams</span>
-                                    <span>May 18 - May 22</span>
-                                </li>
-                                <li class="flex justify-between">
-                                    <span>Emily Davis</span>
-                                    <span>May 20 - May 21</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Pending Approvals -->
-                <div class="mt-6 bg-white rounded-lg shadow-sm p-6 dashboard-card">
-                    <div class="flex justify-between items-center mb-4">
-                        <h2 class="text-lg font-medium text-gray-900">Pending Approval Requests</h2>
-                        <div class="relative">
-                            <input type="text" placeholder="Search employees..." class="pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-sm">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <i class="fas fa-search text-gray-400"></i>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-200">
-                            <thead>
-                                <tr>
-                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Employee</th>
-                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date Range</th>
-                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Days</th>
-                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reason</th>
-                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-gray-200">
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <div class="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center">
-                                                <span class="text-indigo-800 font-medium text-sm">RJ</span>
-                                            </div>
-                                            <div class="ml-4">
-                                                <div class="text-sm font-medium text-gray-900">Robert Johnson</div>
-                                                <div class="text-sm text-gray-500">Developer</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">Annual</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">May 25 - Jun 1, 2025</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">8</td>
-                                    <td class="px-6 py-4 text-sm text-gray-700">Family vacation</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <div class="flex space-x-2">
-                                            <button class="px-3 py-1 bg-green-100 text-green-800 rounded-md hover:bg-green-200">Approve</button>
-                                            <button class="px-3 py-1 bg-red-100 text-red-800 rounded-md hover:bg-red-200">Decline</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <div class="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center">
-                                                <span class="text-indigo-800 font-medium text-sm">JD</span>
-                                            </div>
-                                            <div class="ml-4">
-                                                <div class="text-sm font-medium text-gray-900">Jane Doe</div>
-                                                <div class="text-sm text-gray-500">UI Designer</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">Sick</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">May 20, 2025</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">1</td>
-                                    <td class="px-6 py-4 text-sm text-gray-700">Medical appointment</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <div class="flex space-x-2">
-                                            <button class="px-3 py-1 bg-green-100 text-green-800 rounded-md hover:bg-green-200">Approve</button>
-                                            <button class="px-3 py-1 bg-red-100 text-red-800 rounded-md hover:bg-red-200">Decline</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <div class="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center">
-                                                <span class="text-indigo-800 font-medium text-sm">TS</span>
-                                            </div>
-                                            <div class="ml-4">
-                                                <div class="text-sm font-medium text-gray-900">Tom Smith</div>
-                                                <div class="text-sm text-gray-500">QA Engineer</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">Other</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">May 22, 2025</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">1</td>
-                                    <td class="px-6 py-4 text-sm text-gray-700">Personal matter</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <div class="flex space-x-2">
-                                            <button class="px-3 py-1 bg-green-100 text-green-800 rounded-md hover:bg-green-200">Approve</button>
-                                            <button class="px-3 py-1 bg-red-100 text-red-800 rounded-md hover:bg-red-200">Decline</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                
-                <!-- Team Availability -->
-                <div class="mt-6 bg-white rounded-lg shadow-sm p-6 dashboard-card">
-                    <h2 class="text-lg font-medium text-gray-900 mb-4">Team Availability</h2>
-                    
-                    <div class="mb-4 flex flex-wrap gap-2">
-                        <button class="px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-medium">This Week</button>
-                        <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md text-sm font-medium">Next Week</button>
-                        <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md text-sm font-medium">This Month</button>
-                        <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md text-sm font-medium">Custom</button>
-                    </div>
-                    
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-200">
-                            <thead>
-                                <tr>
-                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Employee</th>
-                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Mon</th>
-                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tue</th>
-                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Wed</th>
-                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Thu</th>
-                                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fri</th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-gray-200">
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <div class="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center">
-                                                <span class="text-indigo-800 font-medium text-sm">RJ</span>
-                                            </div>
-                                            <div class="ml-4">
-                                                <div class="text-sm font-medium text-gray-900">Robert Johnson</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="h-6 w-6 rounded-full bg-green-100 mx-auto"></div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="h-6 w-6 rounded-full bg-green-100 mx-auto"></div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="h-6 w-6 rounded-full bg-green-100 mx-auto"></div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="h-6 w-6 rounded-full bg-green-100 mx-auto"></div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="h-6 w-6 rounded-full bg-green-100 mx-auto"></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <div class="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center">
-                                                <span class="text-indigo-800 font-medium text-sm">JD</span>
-                                            </div>
-                                            <div class="ml-4">
-                                                <div class="text-sm font-medium text-gray-900">Jane Doe</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="h-6 w-6 rounded-full bg-green-100 mx-auto"></div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="h-6 w-6 rounded-full bg-red-100 mx-auto" title="On Leave"></div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="h-6 w-6 rounded-full bg-green-100 mx-auto"></div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="h-6 w-6 rounded-full bg-green-100 mx-auto"></div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="h-6 w-6 rounded-full bg-green-100 mx-auto"></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <div class="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center">
-                                                <span class="text-indigo-800 font-medium text-sm">AW</span>
-                                            </div>
-                                            <div class="ml-4">
-                                                <div class="text-sm font-medium text-gray-900">Alex Williams</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="h-6 w-6 rounded-full bg-green-100 mx-auto"></div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="h-6 w-6 rounded-full bg-green-100 mx-auto"></div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="h-6 w-6 rounded-full bg-red-100 mx-auto" title="On Leave"></div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="h-6 w-6 rounded-full bg-red-100 mx-auto" title="On Leave"></div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="h-6 w-6 rounded-full bg-green-100 mx-auto"></div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="flex justify-end mt-4">
-                        <div class="flex items-center space-x-2">
-                            <div class="h-4 w-4 rounded-full bg-green-100"></div>
-                            <span class="text-xs text-gray-500">Available</span>
-                            <div class="h-4 w-4 rounded-full bg-red-100 ml-3"></div>
-                            <span class="text-xs text-gray-500">On Leave</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <li class="item">
+              <a href="#" class="link flex">
+                <i class="bx bx-cog"></i>
+                <span>Setting</span>
+              </a>
+            </li>
+          </ul>
+          <ul class="menu_item">
+            <li class="item">
+              <a  id="btn-logout" href="#" class="link flex">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                <span>Logout</span>
+              </a>
+            </li>
+          </ul>
         </div>
-    </div>
-
-    <!-- New Leave Request Modal -->
-    <div id="request-modal" class="fixed inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
-            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <div class="sm:flex sm:items-start">
-                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
-                            <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-                                New Leave Request
-                            </h3>
-                            <div class="mt-4">
-                                <form id="leave-request-form">
-                                    <div class="mb-4">
-                                        <label for="leave-type" class="block text-sm font-medium text-gray-700 mb-1">Leave Type</label>
-                                        <select id="leave-type" name="leave-type" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                            <option value="annual">Annual Leave</option>
-                                            <option value="sick">Sick Leave</option>
-                                            <option value="other">Other Leave</option>
-                                        </select>
-                                    </div>
-                                    
-                                    <div class="mb-4 grid grid-cols-2 gap-4">
-                                        <div>
-                                            <label for="start-date" class="block text-sm font-medium text-gray-700 mb-1">Start Date</label>
-                                            <input type="date" name="start-date" id="start-date" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                        </div>
-                                        <div>
-                                            <label for="end-date" class="block text-sm font-medium text-gray-700 mb-1">End Date</label>
-                                            <input type="date" name="end-date" id="end-date" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="mb-4">
-                                        <label for="reason" class="block text-sm font-medium text-gray-700 mb-1">Reason</label>
-                                        <textarea id="reason" name="reason" rows="3" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"></textarea>
-                                    </div>
-                                    
-                                    <div id="leave-summary" class="p-3 bg-gray-50 rounded-md mb-4 hidden">
-                                        <h4 class="text-sm font-medium text-gray-700 mb-2">Leave Summary</h4>
-                                        <p class="text-sm text-gray-600"><span class="font-medium">Days requested:</span> <span id="days-count">0</span></p>
-                                        <p class="text-sm text-gray-600"><span class="font-medium">Available balance:</span> <span id="available-balance">15</span> days</p>
-                                        <p class="text-sm text-gray-600"><span class="font-medium">Remaining after request:</span> <span id="remaining-balance">15</span> days</p>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+        <div class="sidebar_profile flex">
+          <span class="nav_image">
+            <img class="user" src="../assets/user.png" alt="logo_img" />
+          </span>
+          <div class="data_text">
+            <span class="name">David Oliva</span>
+            <span class="email">david@gmail.com</span>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <main class="main-content">
+        <div class="bg-white rounded-lg shadow-sm p-6 mb-6 dashboard-card">
+            <div class="flex flex-col md:flex-row justify-between">
+                <div>
+                    <h1 id="greeting" class="text-2xl font-bold text-gray-900">...</h1>
+                    <p class="text-sm text-gray-500">
+                    Today's Date: <span id="current-date" class="font-medium">May 15, 2025</span>
+                    </p>
                 </div>
-                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                    <button type="button" id="submit-leave-btn" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm">
-                        Submit Request
+
+                <div class="mt-4 md:mt-0 flex items-center">
+                <!-- Notification Button -->
+                <div class="relative">
+                    <button
+                        id="notification-btn"
+                        class="relative bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    >
+                        <span class="sr-only">View notifications</span>
+                        <i class="fas fa-bell text-xl"></i>
+
+                        <!-- Badge -->
+                        <span
+                            id="notification-count"
+                            class="hidden absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center"
+                        >
+                            0
+                        </span>
                     </button>
-                    <button type="button" id="close-modal-btn" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
-                        Cancel
-                    </button>
+
+                    <!-- Dropdown -->
+                    <div
+                        id="notification-dropdown"
+                        class="hidden absolute right-0 mt-2 w-72 bg-white rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 z-50"
+                    >
+                        <div class="p-2 border-b flex justify-between">
+                            <button id="filter-all" class="text-xs text-indigo-600">All</button>
+                            <button id="filter-unread" class="text-xs text-indigo-600">Unread</button>
+                            <button id="clear-all" class="text-xs text-red-600">Clear All</button>
+                        </div>
+                        <ul id="notification-list" class="max-h-64 overflow-y-auto">
+                        <!-- Notifications get injected here -->
+                        </ul>
+                    </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Loading indicator -->
-    <div id="loading-indicator" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50 hidden">
-        <div class="bg-white p-4 rounded-lg shadow-lg flex items-center">
-            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
-            <span class="text-gray-700">Processing...</span>
+        <h2 class="section-title"><i class="fas fa-chart-pie"></i> Leave Balance</h2>
+        <div class="leave-cards">
+           
+            <div class="card card-annual" data-type="Annual">
+                <div class="card-header">
+                    <h3 class="card-title">Annual Leave</h3>
+                    <div class="card-icon icon-annual">
+                        <i class="fas fa-umbrella-beach"></i>
+                    </div>
+                </div>
+                <div class="card-value">-- days</div>
+                <div class="progress-bar">
+                    <div class="progress progress-annual"></div>
+                </div>
+                <div class="card-footer">
+                    <span>Total: -- days</span>
+                    <span>Used: -- days</span>
+                </div>
+                <div class="warning" style="display:none;">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span class="warning-text"></span>
+                </div>
+            </div>
+            
+            <div class="card card-sick" data-type="Sick">
+                <div class="card-header">
+                    <h3 class="card-title">Sick Leave</h3>
+                    <div class="card-icon icon-sick">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                </div>
+                <div class="card-value">-- days</div>
+                <div class="progress-bar">
+                    <div class="progress progress-sick"></div>
+                </div>
+                 <div class="card-footer">
+                    <span>Total: -- days</span>
+                    <span>Used: -- days</span>
+                </div>
+                <div class="warning">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span class="warning-text"></span>
+                </div>
+            </div>
+            <div class="card card-study" data-type="Maternity">
+                <div class="card-header">
+                    <h3 class="card-title">Maternity Leave</h3>
+                    <div class="card-icon icon-maternity">
+                        <i class="fas fa-baby"></i>
+                    </div>
+                </div>
+                <div class="card-value">-- days</div>
+                <div class="progress-bar">
+                    <div class="progress progress-annual"></div>
+                </div>
+                <div class="card-footer">
+                    <span>Total: -- days</span>
+                    <span>Used: -- days</span>
+                </div>
+                <div class="warning" style="display:none;">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span class="warning-text"></span>
+                </div>
+            </div>
+            <div class="card card-personal" data-type="Paternity">
+                <div class="card-header">
+                    <h3 class="card-title">Paternity Leave</h3>
+                    <div class="card-icon icon-paternity">
+                        <i class="fas fa-child"></i>
+                    </div>
+                </div>
+                <div class="card-value">-- days</div>
+                <div class="progress-bar">
+                    <div class="progress progress-annual"></div>
+                </div>
+                <div class="card-footer">
+                    <span>Total: -- days</span>
+                    <span>Used: -- days</span>
+                </div>
+                <div class="warning" style="display:none;">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span class="warning-text"></span>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script id="app-script">
-        $(document).ready(function() {
-            // Set current date
-            const currentDate = new Date();
-            const options = { year: 'numeric', month: 'long', day: 'numeric' };
-            $('#current-date').text(currentDate.toLocaleDateString('en-US', options));
-            
-            // Initialize user data from LocalStorage or use defaults
-            initializeUserData();
-            
-            // Role Switching Logic
-            $('#employee-view-btn').click(function() {
-                $(this).addClass('bg-indigo-600 text-white').removeClass('bg-gray-200 text-gray-700');
-                $('#manager-view-btn').removeClass('bg-indigo-600 text-white').addClass('bg-gray-200 text-gray-700');
-                $('#employee-dashboard').show();
-                $('#manager-dashboard').hide();
-            });
-            
-            $('#manager-view-btn').click(function() {
-                $(this).addClass('bg-indigo-600 text-white').removeClass('bg-gray-200 text-gray-700');
-                $('#employee-view-btn').removeClass('bg-indigo-600 text-white').addClass('bg-gray-200 text-gray-700');
-                $('#employee-dashboard').hide();
-                $('#manager-dashboard').show();
-            });
-            
-            // Modal Controls
-            $('#submit-request-btn').click(function() {
-                showLeaveRequestModal();
-            });
-            
-            $('#close-modal-btn').click(function() {
-                hideLeaveRequestModal();
-            });
-            
-            // Calculate days when dates change
-            $('#start-date, #end-date').change(function() {
-                calculateLeaveDays();
-            });
-            
-            // Leave type change
-            $('#leave-type').change(function() {
-                updateAvailableBalance();
-            });
-            
-            // Submit leave request
-            $('#submit-leave-btn').click(function() {
-                submitLeaveRequest();
-            });
-            
-            $('#track-status-btn').click(function() {
-                // This would typically navigate to a status tracking page
-                showLoading();
-                setTimeout(hideLoading, 1000);
-            });
-            
-            $('#view-history-btn').click(function() {
-                // This would typically navigate to a history page
-                showLoading();
-                setTimeout(hideLoading, 1000);
-            });
+        
+        <h2 class="section-title"><i class="fas fa-calendar-alt"></i> Upcoming Leave</h2>
+        <div class="upcoming-leave">
+            <div class="calendar-nav">
+                <div class="calendar-month">Month Year</div>
+                <div class="calendar-arrows">
+                    <div class="arrow"><i class="fas fa-chevron-left"></i></div>
+                    <div class="arrow"><i class="fas fa-chevron-right"></i></div>
+                </div>
+            </div>
 
-            // Initialize user data from LocalStorage or use defaults
-            function initializeUserData() {
-                // Check if user data exists in localStorage
-                const userData = localStorage.getItem('userData');
-                const userRole = localStorage.getItem('userRole');
-                
-                if (userData) {
-                    // Use existing data
-                    const user = JSON.parse(userData);
-                    $('#greeting').text(`Welcome back, ${user.name}`);
-                    $('#user-info').text(`Department: ${user.department}, Position: ${user.position}`);
-                    $('#user-initials').text(getInitials(user.name));
-                } else {
-                    // Set default data
-                    const defaultUser = {
-                        name: "John Smith",
-                        department: "Engineering",
-                        position: "Senior Developer",
-                        annualLeave: { remaining: 15, used: 5 },
-                        sickLeave: { remaining: 8, used: 2 },
-                        otherLeave: { remaining: 3, used: 0 }
-                    };
-                    localStorage.setItem('userData', JSON.stringify(defaultUser));
-                }
-                
-                // Handle user role
-                if (userRole === 'manager' || userRole === 'both') {
-                    if (userRole === 'both') {
-                        // Show role switcher for users with dual roles
-                        $('#role-switcher').removeClass('hidden');
-                    } else {
-                        // For manager-only users, show manager dashboard by default
-                        $('#employee-dashboard').hide();
-                        $('#manager-dashboard').show();
-                        
-                        // Change the greeting for managers
-                        const user = JSON.parse(localStorage.getItem('userData')) || { name: 'Manager' };
-                        $('#greeting').text(`Hello, ${user.name}`);
-                        $('#user-info').text(`Team: Engineering Team`);
-                    }
-                }
-            }
-            
-            function getInitials(name) {
-                return name.split(' ').map(word => word[0]).join('');
-            }
-            
-            function showLeaveRequestModal() {
-                $('#request-modal').removeClass('hidden');
-                resetForm();
-            }
-            
-            function hideLeaveRequestModal() {
-                $('#request-modal').addClass('hidden');
-            }
-            
-            function resetForm() {
-                $('#leave-request-form')[0].reset();
-                $('#leave-summary').addClass('hidden');
-                updateAvailableBalance();
-            }
-            
-            function calculateLeaveDays() {
-                const startDate = new Date($('#start-date').val());
-                const endDate = new Date($('#end-date').val());
-                
-                if (startDate && endDate && startDate <= endDate) {
-                    // Calculate business days (excluding weekends)
-                    let days = 0;
-                    let currentDate = new Date(startDate);
-                    
-                    while (currentDate <= endDate) {
-                        const dayOfWeek = currentDate.getDay();
-                        if (dayOfWeek !== 0 && dayOfWeek !== 6) {
-                            days++;
-                        }
-                        currentDate.setDate(currentDate.getDate() + 1);
-                    }
-                    
-                    $('#days-count').text(days);
-                    $('#leave-summary').removeClass('hidden');
-                    
-                    // Calculate remaining balance
-                    updateRemainingBalance(days);
-                } else {
-                    $('#leave-summary').addClass('hidden');
-                }
-            }
-            
-            function updateAvailableBalance() {
-                const leaveType = $('#leave-type').val();
-                const userData = JSON.parse(localStorage.getItem('userData')) || { 
-                    annualLeave: { remaining: 15 },
-                    sickLeave: { remaining: 8 },
-                    otherLeave: { remaining: 3 }
-                };
-                
-                let balance = 0;
-                
-                switch (leaveType) {
-                    case 'annual':
-                        balance = userData.annualLeave.remaining;
-                        break;
-                    case 'sick':
-                        balance = userData.sickLeave.remaining;
-                        break;
-                    case 'other':
-                        balance = userData.otherLeave.remaining;
-                        break;
-                }
-                
-                $('#available-balance').text(balance);
-                
-                // Recalculate if dates are set
-                if ($('#start-date').val() && $('#end-date').val()) {
-                    calculateLeaveDays();
-                }
-            }
-            
-            function updateRemainingBalance(days) {
-                const availableBalance = parseInt($('#available-balance').text());
-                const remaining = Math.max(0, availableBalance - days);
-                $('#remaining-balance').text(remaining);
-            }
-            
-            function submitLeaveRequest() {
-                const startDate = $('#start-date').val();
-                const endDate = $('#end-date').val();
-                const leaveType = $('#leave-type').val();
-                const reason = $('#reason').val();
-                
-                if (!startDate || !endDate) {
-                    alert('Please select start and end dates');
-                    return;
-                }
-                
-                if (new Date(startDate) > new Date(endDate)) {
-                    alert('End date must be after start date');
-                    return;
-                }
-                
-                showLoading();
-                
-                // Simulate API call
-                setTimeout(function() {
-                    hideLoading();
-                    hideLeaveRequestModal();
-                    alert('Leave request submitted successfully!');
-                    
-                    // In a real app, we would update the local storage and UI here
-                }, 1500);
-            }
-            
-            function showLoading() {
-                $('#loading-indicator').removeClass('hidden');
-            }
-            
-            function hideLoading() {
-                $('#loading-indicator').addClass('hidden');
-            }
-        });
-    </script>
-</body>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th>
+                        <th>Thu</th><th>Fri</th><th>Sat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                   
+                </tbody>
+            </table>
+        </div>
+
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../js/sidebar.js"></script>
+    <script src="../js/logout.js"></script>
+    <script src="../js/empDash.js"></script>
+    <script src="../js/empDetails.js"></script>
+    
+  </body>
 </html>

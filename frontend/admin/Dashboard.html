@@ -4,15 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StaffSync Admin Dashboard</title>
-    <!-- Tailwind CSS CDN -->
+    <!-- css -->
+     <link rel="stylesheet" href="../css/sidebar.css">
+     <!-- <link rel="stylesheet" href="../css/dashboard.css"> -->
+    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"  crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="../css/style.css">
+    <!-- Boxicons icons -->
+    <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"/>
+    
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f5f7fa;
-        }
         
         .dashboard-card {
             border-radius: 10px;
@@ -74,12 +75,12 @@
         }
     </style>
 </head>
-<body class="bg-gray-100 min-h-screen flex">
+<body class="bg-gray-100 min-h-screen">
 
     <div id="sidebar"></div>
     
     <!-- Main Content Area -->
-    <main class="flex-grow p-6 ml-64 p-6">
+    <main class="main-content">
         <div class="bg-white rounded-lg shadow-sm p-6 mb-6 dashboard-card">
             <div id="topbar"></div>
         </div>
@@ -165,7 +166,7 @@
 
         </div>
         
-        <div class="overflow-x-auto mt-2">
+        <div class="overflow-x-auto mt-4 rounded-lg shadow-sm p-6  dashboard-card">
             <table class="min-w-full divide-y divide-gray-200">
                 <thead>
                     <tr>

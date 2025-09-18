@@ -4,18 +4,136 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leave Management</title>
-    <link rel="stylesheet" href="../css/leave_pages.css">
-    <link rel="stylesheet" href="../css/style.css">
+    <!-- css -->
+    <link rel="stylesheet" href="../css/sidebar.css">
+    <link rel="stylesheet" href="../css/leaves.css">
+    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Boxicons CSS -->
+    <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"/>
 </head>
-<body>
-    <div id="top"></div>
-    <div id="topbar2"></div>
+<body class="min-h-screen">
+    <nav class="sidebar locked">
+      <div class="logo_items flex">
+        <span class="nav_image">
+          <img src="../assets/logo.jpeg" alt="logo_img" />
+        </span>
+        <span class="logo_name">StaffSync</span>
+        <i class="bx bx-lock-alt" id="lock-icon" title="Unlock Sidebar"></i>
+        <i class="bx bx-x" id="sidebar-close"></i>
+      </div>
+      <div class="menu_container">
+        <div class="menu_items">
+          <ul class="menu_item">
+            <div class="menu_title flex">
+              <span class="title">Dashboard</span>
+              <span class="line"></span>
+            </div>
+            <li class="item">
+              <a href="/employee/dashboard" class="link flex">
+                <i class="bx bx-grid-alt"></i>
+                <span>Dashboard</span>
+              </a>
+            </li>
+          </ul>
+          <ul class="menu_item">
+            <div class="menu_title flex">
+              <span class="title">Leaves</span>
+              <span class="line"></span>
+            </div>
+            <li class="item">
+              <a href="/employee/apply" class="link flex">
+                <i class="fa-regular fa-ticket"></i> 
+                <span>Apply Leave</span>
+              </a>
+            </li>
+            <li class="item">
+              <a href="/employee/leave-history" class="link flex">
+                <i class='bx  bx-history'></i> 
+                <span>History</span>
+              </a>
+            </li>
+          </ul>
+          <ul class="menu_item">
+            <div class="menu_title flex">
+              <span class="title">Setting</span>
+              <span class="line"></span>
+            </div>
+            <li class="item">
+              <a href="#" class="link flex">
+                <i class="bx bx-cog"></i>
+                <span>Setting</span>
+              </a>
+            </li>
+          </ul>
+          <ul class="menu_item">
+            <li class="item">
+              <a  id="btn-logout" href="#" class="link flex">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                <span>Logout</span>
+              </a>
+            </li>
+          </ul> 
+        </div>
+        <div class="sidebar_profile flex">
+          <span class="nav_image">
+            <img class="user" src="../assets/user.png" alt="logo_img" />
+          </span>
+          <div class="data_text">
+            <span class="name">David Oliva</span>
+            <span class="email">david@gmail.com</span>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="main-content">
+        <div class="bg-white rounded-lg shadow-sm p-6 mb-6  dashboard-card">
+            <div class="flex flex-col md:flex-row justify-between">
+                <div>
+                    <h1 id="greeting" class="text-2xl font-bold text-gray-900">...</h1>
+                    <p class="text-sm text-gray-500">
+                    Today's Date: <span id="current-date" class="font-medium">May 15, 2025</span>
+                    </p>
+                </div>
+                <div class="mt-4 md:mt-0 flex items-center">
+                <!-- Notification Button -->
+                <div class="relative">
+                    <button
+                        id="notification-btn"
+                        class="relative bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    >
+                        <span class="sr-only">View notifications</span>
+                        <i class="fas fa-bell text-xl"></i> 
 
-    <div class="main-content" style="margin-top: 100px;">
-        <!-- Leave History Section -->
-        <section class="card">
+                        <!-- Badge -->
+                        <span
+                            id="notification-count"
+                            class="hidden absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center"
+                        >
+                            0
+                        </span>
+                    </button>
+
+                    <!-- Dropdown -->
+                    <div
+                        id="notification-dropdown"
+                        class="hidden absolute right-0 mt-2 w-72 bg-white rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 z-50"
+                    >
+                        <div class="p-2 border-b flex justify-between">
+                            <button id="filter-all" class="text-xs text-indigo-600">All</button>
+                            <button id="filter-unread" class="text-xs text-indigo-600">Unread</button>
+                            <button id="clear-all" class="text-xs text-red-600">Clear All</button>
+                        </div>
+                        <ul id="notification-list" class="max-h-64 overflow-y-auto">
+                        <!-- Notifications get injected here -->
+                        </ul>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <section class="card">  
             <h2>Leave History</h2>
             <div class="history-table-wrapper">
                 <table id="leaveHistoryTable">
@@ -28,20 +146,20 @@
                             <th>Status</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody> 
                         <!-- Leave requests will be dynamically inserted here -->
                     </tbody> 
                 </table>
             </div>
         </section>
-        
     </div>
-    
+
+   
      
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="../js/layout.js"></script>
     <script src="../js/logout.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../js/empDetails.js"></script>
+    <script src="../js/sidebar.js"></script>
     <script>
             //get all leaves for employee
             document.addEventListener("DOMContentLoaded", () => {
