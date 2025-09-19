@@ -16,7 +16,7 @@ exports.createNotification = async (req, res) => {
         await notification.save();
 
         //emit via socket.io
-        req.io.to(receiverId.toString()).emit("newNotification", notification);
+        req.io.to(recipientId.toString()).emit("newNotification", notification);
 
         res.status(201).json(notification);
     } catch (error) {
@@ -24,17 +24,22 @@ exports.createNotification = async (req, res) => {
     }
 };
 
-//fetch all for admin(companyId)
-exports.getNotifications = async (req, res) =>{
-    try{
-        const companyId = req.companyId;
-        const notifications = await Notification.find({ recipientId: companyId }).sort({ createdAt: -1});
-        
+
+// Fetch notifications for logged-in user
+exports.getNotifications = async (req, res) => {
+    try {
+        const userId = req.employeeId || req.companyId; // employee or admin
+        if (!userId) return res.status(400).json({ error: "User ID missing" });
+
+        const notifications = await Notification.find({ recipientId: userId })
+            .sort({ createdAt: -1 });
+
         res.json(notifications);
-    }catch(error){
-        res.status(500).json({ error: error.message});
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
 };
+
 
 // Mark as read
 exports.markAsRead = async (req, res) => {
@@ -51,13 +56,34 @@ exports.markAsRead = async (req, res) => {
     }
 };
 
-// Clear all for a company
+// Clear all notifications for logged-in user
 exports.clearNotifications = async (req, res) => {
     try {
-        const { companyId } = req.params;
-        await Notification.deleteMany({ recipientId: companyId });
+        const userId = req.employeeId || req.companyId;
+        if (!userId) return res.status(400).json({ error: "User ID missing" });
+        console.log("Clearing notifications for userId:", userId); 
+
+        await Notification.deleteMany({ recipientId: userId });
         res.json({ message: "All notifications cleared" });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
+};
+
+
+// Delete a single notification
+exports.deleteNotification = async (req, res) => {
+  try {
+    const { id } = req.params; // notification ID
+
+    const deleted = await Notification.findByIdAndDelete(id);
+
+    if (!deleted) {
+      return res.status(404).json({ error: "Notification not found" });
+    }
+
+    res.json({ message: "Notification deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };

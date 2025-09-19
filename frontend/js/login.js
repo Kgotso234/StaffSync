@@ -58,7 +58,7 @@ async function handleLogin(e) {
         password = document.getElementById("employee-password").value;
         apiUrl = "http://localhost:5000/employees/login";
         requestBody = { e_email: email, password: password };
-        redirectUrl = "/employee/apply";
+        redirectUrl = "/employee/dashboard";
     } else {
         userType = "admin";
         email = document.getElementById("admin-email").value;

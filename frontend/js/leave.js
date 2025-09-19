@@ -1,6 +1,23 @@
 document.addEventListener("DOMContentLoaded", async () => {
+  const token = localStorage.getItem("token"); // assume employee logged in
+  // --- Populate Employee Number ---
   try {
-    const token = localStorage.getItem("token"); // assume employee logged in
+    // Decode JWT payload (without verifying signature)
+    const payloadBase64 = token.split('.')[1];
+    const decoded = JSON.parse(atob(payloadBase64));
+    
+    if (decoded.e_number) {
+      document.getElementById("employeeNumber").value = decoded.e_number;
+    } else {
+      console.warn("e_number not found in token payload.");
+    }
+  } catch (err) {
+    console.error("Failed to decode token for employee number:", err);
+  }
+  // --- Fetch and populate leave types ---
+  try {
+    
+     
 
     const res = await fetch("http://localhost:5000/leave-type", {
       method: "GET",

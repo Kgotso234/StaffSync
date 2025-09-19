@@ -20,19 +20,12 @@ exports.verifyToken = (req, res, next) => {
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        //console.log("Decoded token:", decoded); // for debugging
-
-        // req.company = decoded;
-        
-        // if (decoded.employeeId){
-        //     req.employees = { _id: decoded.employeeId };
-        //     //console.log("EmployeeId: ",req.employees);
-        // } 
+       
         // Attach directly for the controller
         req.employeeId = decoded.employeeId;
         req.companyId = decoded.companyId;
         req.e_email = decoded.e_email;
-        //console.log("employee email: ", req.e_email);
+        req.e_number = decoded.e_number;
 
 
         next();

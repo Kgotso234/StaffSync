@@ -54,15 +54,15 @@ includeHTML("topbar", "../layout/topbar.html").then(() =>{
     // --- Socket.io Setup ---
     const socket = io("http://localhost:5000", { auth: { token }, transports: ["websocket"] });
     socket.on("connect", () => {
-      console.log("Connected to socket server:", socket.id);
+      // console.log("Connected to socket server:", socket.id);
       if (company?._id) {
           socket.emit("JoinCompanyRoom", company._id);
-          console.log("Joined company room:", company._id);
+          // console.log("Joined company room:", company._id);
       }
     });
 
     socket.on("newNotification", (notif) => {
-      console.log("Received new notification:", notif);
+      // console.log("Received new notification:", notif);
       notifications.unshift(notif);
       renderNotifications(notifications);
     });
@@ -92,7 +92,7 @@ includeHTML("topbar", "../layout/topbar.html").then(() =>{
             // Mark as read on click
             li.addEventListener("click", async () => {
               try {
-                const res = await fetch(`http://localhost:5000/notifications/read/${n._id}`, {
+                const res = await fetch(`http://localhost:5000/notifications/${n._id}/read`, {
                   method: "PATCH",
                   headers: { "Authorization": `Bearer ${token}` },
                 });

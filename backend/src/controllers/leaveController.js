@@ -140,7 +140,22 @@ exports.updateLeaveStatus = async (req, res) => {
         leave.updatedAt = new Date();
 
         await leave.save();
-
+        //create notification 
+        const notification = new Notification({
+            recipientId: leave.employeeId,       // employee who will receive it
+            senderId: companyId,                 
+            type: "LeaveDecision",  
+            message: `Your leave request from ${leave.startDate.toDateString()} to ${leave.endDate.toDateString()} has been ${status}.`,
+            data: {
+                leaveId: leave._id,
+                status,
+            }         
+        });
+        await notification.save();
+        // Emit real-time event to employee via Socket.IO
+        if (req.io) {
+            req.io.to(leave.employeeId.toString()).emit("newNotification", notification);
+        }
         res.status(200).json({ message: `Leave status updated to ${status}`, leave });
     } catch (error) {
         console.error("Error updating leave status:", error);

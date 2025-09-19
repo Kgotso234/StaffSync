@@ -42,7 +42,7 @@ async function loadLeaveUsage() {
             }
         }); 
         const data = await res.json();
-        console.log("Leave usage data:", data); // check response
+        // console.log("Leave usage data:", data); // check response
 
         if (data.success && Array.isArray(data.usage)) {
             const container = document.getElementById("leave-usage-container");

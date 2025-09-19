@@ -6,7 +6,7 @@ const LeaveType = require('../models/leaveTypes');
 exports.getLeaveBalance = async (req, res) => {
     try {
        const employeeId = req.params.employeeId;  // <-- use params, not req.employeeId
-        console.log("Fetching leave balance for employee ID:", employeeId);
+        //console.log("Fetching leave balance for employee ID:", employeeId);
         if (!employeeId) {
             return res.status(400).json({ message: "Employee ID required" });
             }

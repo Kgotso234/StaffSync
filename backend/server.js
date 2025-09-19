@@ -100,16 +100,20 @@ const io = new Server(server, {
 
 // Socket.io connection handling
 io.on("connection", (socket) => {
-    console.log("New client connected: ", socket.id);
+   // console.log("New client connected: ", socket.id);
 
     //join room by company id (so notifications can be targeted)
     socket.on("JoinCompanyRoom", (companyId) =>{
         socket.join(companyId);
-        console.log(`Socket ${socket.id} joined room ${companyId}`);
+        // console.log(`Socket ${socket.id} joined room ${companyId}`);
+    });
+
+    socket.on("JoinEmployeeRoom", (employeeId) =>{
+        socket.join(employeeId);
     });
 
     socket.on("disconnect", ()=> {
-        console.log("client disconned:", socket.id);
+       // console.log("client disconned:", socket.id);
     });
 });
 
