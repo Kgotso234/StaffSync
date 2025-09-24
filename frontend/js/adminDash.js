@@ -138,8 +138,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     const res = await fetch("http://localhost:5000/admin/leaves/latest", {
       headers: { Authorization: `Bearer ${token}` }
     });
-    const { leaves } = await res.json();
+    const data = await res.json();
+    if (!res.ok || !data.leaves) {
+    console.error("Failed to fetch latest leaves or unexpected format:", data);
+    return;
+    }
 
+    const leaves = data.leaves;
     latestTbody.innerHTML = "";
     leaves.forEach(leave => {
       const emp = leave.employeeId;

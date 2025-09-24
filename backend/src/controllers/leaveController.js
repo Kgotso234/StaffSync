@@ -3,6 +3,7 @@ const leaveBalance = require("../models/leaveBalance");
 const mongoose = require("mongoose");
 const Notification = require("../models/Notifications");
 const Employees = require("../models/Employees");
+const { countWorkingDays } = require("../utils/workingDays");
 
 exports.applyLeave = async (req, res) => {
     try {
@@ -26,7 +27,7 @@ exports.applyLeave = async (req, res) => {
 
         //calculate total days
         const oneDay = 1000 * 60 * 60 * 24;
-        const totalDays = Math.ceil((endDateObj - startDateObj) / oneDay);
+        const totalDays = await countWorkingDays(startDateObj, endDateObj, "ZA" );
 
         // Check leave balance
         const year = startDateObj.getFullYear();

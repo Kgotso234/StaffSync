@@ -21,7 +21,7 @@ async function loadLeaveBalance () {
     }
     const results = await response.json();
     const balances = results.balance;
-    console.log('Leave balances:', balances);
+    // console.log('Leave balances:', balances);
 
     if (!balances || balances.length === 0) {
       console.warn('No leave balance data available');
@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       });
       if (!res.ok) throw new Error("Failed to fetch leaves");
       leaves = await res.json();
-      console.log("Leaves fetched:", leaves);
+      // console.log("Leaves fetched:", leaves);
       renderCalendar();
     } catch (err) {
       console.error(err);
@@ -120,10 +120,32 @@ document.addEventListener("DOMContentLoaded", async function () {
             const end = new Date(leave.endDate);
 
             if (cellDate >= start && cellDate <= end) {
-              cell.classList.add(leave.status); // approved / pending / rejected
-              const dot = document.createElement("div");
-              dot.classList.add("event-dot", `${leave.status}-dot`);
-              cell.appendChild(dot);
+              const today  = new Date();
+              const todayOnly = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+              const cellOnly  = new Date(cellDate.getFullYear(), cellDate.getMonth(), cellDate.getDate());
+
+              let statusClass = "";
+
+              if (cellDate > todayOnly) {
+                // Future leave - Upcoming leave
+                statusClass = "upcoming-leave";
+
+              }else if (cellDate.getTime() === todayOnly.getTime()) {
+                // Today's leave - Ongoing leave
+                statusClass = "ongoing-leave";
+              } else if (cellDate < todayOnly) {
+                // Past leave - Completed leave
+                statusClass = "completed-leave";
+              }
+
+              if (statusClass) {
+                cell.classList.add(statusClass);
+                const dot = document.createElement("div");
+
+                dot.classList.add("event-dot", statusClass + "-dot");
+                cell.appendChild(dot);
+                // console.log(`Marked ${statusClass} on ${cellDate.toDateString()}`);
+              }
             }
           });
 

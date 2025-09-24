@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
         if (emp) {
         const employee = JSON.parse(emp);
-        console.log("Loaded employee:", employee);
+        // console.log("Loaded employee:", employee);
 
         nameElement.textContent = employee.e_fname + " " + employee.e_lname;
         emailElement.textContent = employee.e_email;
