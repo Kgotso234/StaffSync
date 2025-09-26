@@ -1,4 +1,4 @@
-const leaveBalance = require('../models/LeaveBalance');
+const leaveBalance = require('../models/leaveBalance');
 const Employee = require('../models/Employees');
 const LeaveType = require('../models/leaveTypes');
 

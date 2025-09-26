@@ -109,3 +109,40 @@ exports.login = async (req, res) => {
         res.status(500).json({ error: e.message });
     }
 };
+
+//Delete Employee
+exports.deleteEmployee = async (req, res) => {
+    try {
+        const { employeeId } = req.params;
+        const deleted = await Employee.findByIdAndDelete(employeeId);
+        if (!deleted) {
+            return res.status(404).json({ message: "Employee not found" });
+        }
+        res.status(200).json({ message: "Employee deleted successfully" });
+    } catch (error) {
+        console.error("Error deleting employee:", error);
+        res.status(500).json({ error: "Server error" });
+    }
+};
+
+//Update Employee
+exports.updateEmployee = async (req, res) => {
+    try {
+        const { employeeId } = req.params;
+        const updates = req.body;
+
+        const updatedEmployee = await Employee.findByIdAndUpdate(
+            employeeId, 
+            updates, 
+            { new: true }
+        );
+        
+        if (!updatedEmployee) {
+            return res.status(404).json({ message: "Employee not found" });
+        }
+        res.status(200).json({ message: "Employee updated successfully", updatedEmployee });
+    } catch (error) {
+        console.error("Error updating employee:", error);
+        res.status(500).json({ error: "Server error" });
+    }
+};

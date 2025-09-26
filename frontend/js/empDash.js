@@ -73,8 +73,8 @@ document.addEventListener("DOMContentLoaded", async function () {
   let currentMonth = new Date().getMonth();
   let currentYear = new Date().getFullYear();
   let leaves = [];
+  let workingDatesMap = new Map(); // key = date string, value = leave status class
 
-  // Fetch leave data
   async function fetchLeaves() {
     const token = localStorage.getItem("token");
     const employee = JSON.parse(localStorage.getItem("employee"));
@@ -86,14 +86,57 @@ document.addEventListener("DOMContentLoaded", async function () {
       });
       if (!res.ok) throw new Error("Failed to fetch leaves");
       leaves = await res.json();
-      // console.log("Leaves fetched:", leaves);
+
+      // Precompute working dates for all leaves
+      workingDatesMap.clear();
+      for (const leave of leaves) {
+        const start = new Date(leave.startDate);
+        const end = new Date(leave.endDate);
+        const workingDates = await getWorkingDates(start, end); // your previous function
+        workingDates.forEach(d => {
+          const key = d.toDateString();
+          const today = new Date();
+          const todayOnly = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+          let statusClass = "";
+          if (d.getTime() > todayOnly.getTime()) statusClass = "upcoming-leave";
+          else if (d.getTime() === todayOnly.getTime()) statusClass = "ongoing-leave";
+          else statusClass = "completed-leave";
+
+          workingDatesMap.set(key, statusClass);
+        });
+      }
+
       renderCalendar();
     } catch (err) {
       console.error(err);
     }
   }
 
-  // Render calendar for current month
+  async function getWorkingDates(startDate, endDate) {
+    const startYear = startDate.getFullYear();
+    const endYear = endDate.getFullYear();
+    let allHolidays = [];
+
+    for (let year = startYear; year <= endYear; year++) {
+      const res = await fetch(`https://date.nager.at/api/v3/PublicHolidays/${year}/ZA`);
+      const holidays = await res.json();
+      allHolidays.push(...holidays.map(h => new Date(h.date).toDateString()));
+    }
+
+    const workingDates = [];
+    let current = new Date(startDate);
+    while (current <= endDate) {
+      const day = current.getDay();
+      const dateStr = current.toDateString();
+      if (day !== 0 && day !== 6 && !allHolidays.includes(dateStr)) {
+        workingDates.push(new Date(current));
+      }
+      current.setDate(current.getDate() + 1);
+    }
+    return workingDates;
+  }
+
   function renderCalendar() {
     monthElement.textContent = `${months[currentMonth]} ${currentYear}`;
     tableBody.innerHTML = "";
@@ -104,50 +147,22 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     for (let i = 0; i < 6; i++) {
       const row = document.createElement("tr");
-
       for (let j = 0; j < 7; j++) {
         const cell = document.createElement("td");
-
         if ((i === 0 && j < firstDay) || date > daysInMonth) {
           cell.textContent = "";
         } else {
-          cell.textContent = date;
           const cellDate = new Date(currentYear, currentMonth, date);
+          const key = cellDate.toDateString();
+          cell.textContent = date;
 
-          // Highlight leave days
-          leaves.forEach(leave => {
-            const start = new Date(leave.startDate);
-            const end = new Date(leave.endDate);
-
-            if (cellDate >= start && cellDate <= end) {
-              const today  = new Date();
-              const todayOnly = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-              const cellOnly  = new Date(cellDate.getFullYear(), cellDate.getMonth(), cellDate.getDate());
-
-              let statusClass = "";
-
-              if (cellDate > todayOnly) {
-                // Future leave - Upcoming leave
-                statusClass = "upcoming-leave";
-
-              }else if (cellDate.getTime() === todayOnly.getTime()) {
-                // Today's leave - Ongoing leave
-                statusClass = "ongoing-leave";
-              } else if (cellDate < todayOnly) {
-                // Past leave - Completed leave
-                statusClass = "completed-leave";
-              }
-
-              if (statusClass) {
-                cell.classList.add(statusClass);
-                const dot = document.createElement("div");
-
-                dot.classList.add("event-dot", statusClass + "-dot");
-                cell.appendChild(dot);
-                // console.log(`Marked ${statusClass} on ${cellDate.toDateString()}`);
-              }
-            }
-          });
+          if (workingDatesMap.has(key)) {
+            const statusClass = workingDatesMap.get(key);
+            cell.classList.add(statusClass);
+            const dot = document.createElement("div");
+            dot.classList.add("event-dot", statusClass + "-dot");
+            cell.appendChild(dot);
+          }
 
           // Highlight today
           const today = new Date();
@@ -161,15 +176,12 @@ document.addEventListener("DOMContentLoaded", async function () {
 
           date++;
         }
-
         row.appendChild(cell);
       }
-
       tableBody.appendChild(row);
     }
   }
 
-  // Month navigation
   arrows.forEach(arrow => {
     arrow.addEventListener("click", () => {
       if (arrow.querySelector(".fa-chevron-left")) {

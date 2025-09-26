@@ -72,7 +72,7 @@
     <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
     <script src="../js/logout.js"></script>
     <script src="../js/includes.js"></script>
-    <script src="../js/adminDetails.js"></script>
+    
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", ()=>{
@@ -103,6 +103,7 @@
 
                 employees.forEach(e => {
                     const row = document.createElement("tr");
+                    row.setAttribute("data-id", e._id);
                     const employeeName = `${e.e_fname || ""} ${e.e_lname || ""}`;
                     row.innerHTML =`
                             <td class="border-t py-2 px-4 text-gray-800">${employeeName}</td>
@@ -110,11 +111,50 @@
                             <td class="border-t py-2 px-4 text-gray-800">${e.e_email}</td>
                             <td class="border-t py-2 px-4 text-gray-800">${e.departmentId?.departmentName || "N/A"}</td>
                             <td class="border-t py-2 px-4 text-gray-800">
-                                <button class="text-blue-500 hover:text-blue-700 text-sm font-semibold mr-2">Edit</button>
-                                <button class="text-red-500 hover:text-red-700 text-sm font-semibold">Delete</button>
+                                <button class="edit-btn text-blue-500 hover:text-blue-700 text-sm font-semibold mr-2" data_id="${e._id}">Edit</button>
+                                <button class="delete-btn text-red-500 hover:text-red-700 text-sm font-semibold" data-id="${e._id}">Delete</button>
                             </td>
                     `;
                     tbody.appendChild(row);
+                });
+                
+                // Attach delete handlers
+                document.querySelectorAll(".delete-btn").forEach(btn => {
+                    btn.addEventListener("click", async (e) => {
+                        const id = e.target.getAttribute("data-id");
+                        Swal.fire({
+                            title: 'Are you Sure?',
+                            text: "This action cannot be undone!",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Yes, delete it!'
+                        }).then(async(result) => {
+                            if (result.isConfirmed) {
+                                try {
+                                    const res = await fetch(`http://localhost:5000/employees/${id}`, {
+                                        method: "DELETE",
+                                        headers: { Authorization: `Bearer ${token}` }
+                                    });
+
+                                    const data = await res.json();
+
+                                    if (res.ok) {
+                                        // remove row from DOM
+                                        document.querySelector(`tr[data-id="${id}"]`).remove();
+
+                                        Swal.fire("Deleted!", data.message || "Employee deleted.", "success");
+                                    } else {
+                                        Swal.fire("Error!", data.message || "Failed to delete employee.", "error");
+                                    }
+                                } catch (error) {
+                                    console.error("Error deleting employee:", error);
+                                    Swal.fire("Error!", "Something went wrong.", "error");
+                                }
+                            }
+                        })
+                    });
                 });
             }
         });

@@ -153,8 +153,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const type = leave.leaveTypeId?.name || "N/A";
       const status = leave.status || "N/A";
       const range = `${new Date(leave.startDate).toLocaleDateString()} - ${new Date(leave.endDate).toLocaleDateString()}`;
-      const days = Math.ceil((new Date(leave.endDate) - new Date(leave.startDate)) / (1000*60*60*24)) + 1;
-
+      const days = leave.totalDays ?? 0;
       let statusClass = "text-yellow-600"; 
       if (leave.status === "Approved") statusClass = "text-green-600";
       if (leave.status === "Rejected") statusClass = "text-red-600";
